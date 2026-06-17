@@ -231,6 +231,37 @@
       flex-wrap: wrap;
       gap: 10px;
       justify-content: flex-end;
+      align-items: center;
+    }
+
+    .top-tabs {
+      display: inline-flex;
+      gap: 8px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .top-tab {
+      min-height: 34px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .top-tab.is-active {
+      color: var(--ink);
+      border-color: rgba(15, 111, 255, 0.32);
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
     }
 
     .top-links a {
@@ -261,6 +292,67 @@
     .lang-toggle:hover {
       transform: translateY(-1px);
       border-color: rgba(15, 111, 255, 0.35);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.is-active {
+      display: block;
+    }
+
+    .resume-shell {
+      min-height: 62vh;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+    }
+
+    .resume-col {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .resume-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--card-strong);
+      box-shadow: 0 14px 30px rgba(16, 24, 32, 0.11);
+    }
+
+    .resume-card h3 {
+      margin: 0 0 12px;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .resume-card p,
+    .resume-list {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .resume-list {
+      padding-left: 18px;
+    }
+
+    .resume-list li + li {
+      margin-top: 8px;
+    }
+
+    body[data-active-tab="resume"] .story-timeline,
+    body[data-active-tab="resume"] .scroll-progress {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .hero {
@@ -1431,10 +1523,24 @@
     .dark-theme .card-actions a:hover,
     .dark-theme .site-actions a:hover,
     .dark-theme .story-timeline a.is-active,
+    .dark-theme .top-tab.is-active,
     .dark-theme .lang-toggle {
       color: #f4f8ff !important;
       border-color: rgba(83, 162, 255, 0.55) !important;
       background: rgba(26, 43, 74, 0.94) !important;
+    }
+
+    .dark-theme .top-tabs,
+    .dark-theme .top-tab,
+    .dark-theme .resume-card {
+      background: rgba(12, 18, 30, 0.78);
+      border-color: rgba(163, 189, 255, 0.2);
+      color: #dbe9ff;
+    }
+
+    .dark-theme .resume-card p,
+    .dark-theme .resume-list {
+      color: #a8bfdc;
     }
 
     .dark-theme .browser-bar {
@@ -1491,7 +1597,8 @@
     @media (max-width: 1080px) {
       .hero,
       .feature-grid,
-      .sites-grid {
+      .sites-grid,
+      .resume-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1592,6 +1699,10 @@
           <span data-i18n="brandSubtitle">A compact case-study hub for your live products.</span>
         </div>
       </div>
+      <div class="top-tabs" role="tablist" aria-label="Main tabs">
+        <button class="top-tab is-active" type="button" data-tab-target="index" data-i18n="tabIndex">Index</button>
+        <button class="top-tab" type="button" data-tab-target="resume" data-i18n="tabResume">Resume</button>
+      </div>
       <nav class="top-links" aria-label="快速入口">
         <button id="langToggle" class="lang-toggle" type="button">中文</button>
         <a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer">Battery &amp; Charging</a>
@@ -1600,6 +1711,7 @@
       </nav>
     </header>
 
+    <main id="panel-index" class="tab-panel is-active">
     <section id="home" class="hero">
       <div class="hero-copy">
         <p class="eyebrow" data-i18n="eyebrow">Portfolio of live pages</p>
@@ -1875,11 +1987,64 @@
       <strong data-i18n="liveMapTitle">Current live map</strong>
       <p data-i18n="liveMapDesc">This landing page now behaves like a lightweight portfolio homepage: stable visual previews, concise case-study framing, and direct links to live production pages.</p>
     </section>
+    </main>
+
+    <main id="panel-resume" class="tab-panel" aria-hidden="true">
+      <section class="section resume-shell">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="resumeTitle">Resume</h2>
+            <p data-i18n="resumeIntro">A bilingual profile snapshot covering positioning, experience focus, and practical strengths.</p>
+          </div>
+        </div>
+        <div class="resume-grid">
+          <div class="resume-col">
+            <article class="resume-card">
+              <h3 data-i18n="resumeProfileTitle">Profile</h3>
+              <p data-i18n="resumeProfileBody">Product-minded storyteller and builder focused on automotive strategy, digital product narratives, and data-driven communication across cross-functional teams.</p>
+            </article>
+            <article class="resume-card">
+              <h3 data-i18n="resumeExperienceTitle">Experience Focus</h3>
+              <ul class="resume-list">
+                <li data-i18n="resumeExp1">Automotive benchmarking and charging-performance analysis for decision-ready reporting.</li>
+                <li data-i18n="resumeExp2">Interactive web concepting that blends brand expression with playful user engagement.</li>
+                <li data-i18n="resumeExp3">Bilingual content strategy and narrative packaging for public-facing digital pages.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="resume-col">
+            <article class="resume-card">
+              <h3 data-i18n="resumeSkillsTitle">Core Skills</h3>
+              <ul class="resume-list">
+                <li data-i18n="resumeSkill1">Product storytelling and case-study framing</li>
+                <li data-i18n="resumeSkill2">Data-to-insight transformation for dashboard experiences</li>
+                <li data-i18n="resumeSkill3">Web prototyping with HTML, CSS, JavaScript</li>
+                <li data-i18n="resumeSkill4">Bilingual communication: Chinese / English</li>
+              </ul>
+            </article>
+            <article class="resume-card">
+              <h3 data-i18n="resumeContactTitle">Portfolio Links</h3>
+              <ul class="resume-list">
+                <li><a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer">EV Charging Benchmarking</a></li>
+                <li><a href="https://ttoriaa.github.io/gaming-vikipedia/" target="_blank" rel="noreferrer">///M Playground</a></li>
+                <li><a href="https://ttoriaa.github.io/shimai-podcast-site/index.html?lang=zh#home" target="_blank" rel="noreferrer">Shimai Podcast</a></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
   <script>
     (() => {
+      const body = document.body;
       const progressBar = document.getElementById('scrollProgressBar');
       const langToggle = document.getElementById('langToggle');
+      const tabButtons = Array.from(document.querySelectorAll('.top-tab[data-tab-target]'));
+      const tabPanels = {
+        index: document.getElementById('panel-index'),
+        resume: document.getElementById('panel-resume')
+      };
       const anchorLinks = Array.from(document.querySelectorAll('.story-timeline a[data-anchor]'));
       const heroSteps = Array.from(document.querySelectorAll('.hero-step'));
       const featureCards = Array.from(document.querySelectorAll('.feature-card'));
@@ -1899,6 +2064,8 @@
           pageTitle: "Vikipedia: Let's roll.",
           brandTitle: "Vikipedia: Let's roll.",
           brandSubtitle: 'A compact case-study hub for your live products.',
+          tabIndex: 'Index',
+          tabResume: 'Resume',
           eyebrow: 'Portfolio of live pages',
           heroTitle: "Vikipedia: Let's roll.",
           heroStepM: '///M Playground: a brainy playground with chess, sudoku, snake, and 2048.',
@@ -1915,12 +2082,28 @@
           siteGamingSummary: 'A brain-message playground blending chess, sudoku, snake, and 2048 into one branded interaction layer.',
           liveMapTitle: 'Current live map',
           liveMapDesc: 'This landing page now behaves like a lightweight portfolio homepage: stable visual previews, concise case-study framing, and direct links to live production pages.',
+          resumeTitle: 'Resume',
+          resumeIntro: 'A bilingual profile snapshot covering positioning, experience focus, and practical strengths.',
+          resumeProfileTitle: 'Profile',
+          resumeProfileBody: 'Product-minded storyteller and builder focused on automotive strategy, digital product narratives, and data-driven communication across cross-functional teams.',
+          resumeExperienceTitle: 'Experience Focus',
+          resumeExp1: 'Automotive benchmarking and charging-performance analysis for decision-ready reporting.',
+          resumeExp2: 'Interactive web concepting that blends brand expression with playful user engagement.',
+          resumeExp3: 'Bilingual content strategy and narrative packaging for public-facing digital pages.',
+          resumeSkillsTitle: 'Core Skills',
+          resumeSkill1: 'Product storytelling and case-study framing',
+          resumeSkill2: 'Data-to-insight transformation for dashboard experiences',
+          resumeSkill3: 'Web prototyping with HTML, CSS, JavaScript',
+          resumeSkill4: 'Bilingual communication: Chinese / English',
+          resumeContactTitle: 'Portfolio Links',
           langButton: '中文'
         },
         zh: {
           pageTitle: "Vikipedia: Let's roll.",
           brandTitle: "Vikipedia: Let's roll.",
           brandSubtitle: '一个紧凑的案例作品首页，连接你所有线上项目。',
+          tabIndex: '首页',
+          tabResume: '简历',
           eyebrow: '线上项目作品集入口',
           heroTitle: "Vikipedia: Let's roll.",
           heroStepM: '///M Playground：脑力游乐场，聚合 chess / sudoku / snake / 2048，轻快但有品牌张力。',
@@ -1937,6 +2120,20 @@
           siteGamingSummary: '一个融合 chess、sudoku、snake、2048 的脑力互动场，把品牌表达做成可玩体验。',
           liveMapTitle: '当前线上地图',
           liveMapDesc: '这个 landing page 现在是轻量作品集首页：稳定预览、清晰案例框架、直达线上页面。',
+          resumeTitle: '个人简历',
+          resumeIntro: '中英文切换的简历概览，覆盖定位、经验重点和核心能力。',
+          resumeProfileTitle: '个人定位',
+          resumeProfileBody: '以产品叙事与落地构建为核心，关注汽车战略、数字化产品表达与数据驱动沟通，擅长跨团队协作推进。',
+          resumeExperienceTitle: '经验重点',
+          resumeExp1: '面向决策与汇报的汽车 benchmark 与充电性能分析。',
+          resumeExp2: '将品牌表达与可玩交互融合的 Web 概念设计与实现。',
+          resumeExp3: '面向外部传播页面的中英双语内容策略与叙事包装。',
+          resumeSkillsTitle: '核心能力',
+          resumeSkill1: '产品叙事与 case-study 结构化表达',
+          resumeSkill2: '从数据到洞察的可视化与仪表盘体验设计',
+          resumeSkill3: 'HTML / CSS / JavaScript 快速原型构建',
+          resumeSkill4: '中英双语沟通与内容交付',
+          resumeContactTitle: '项目链接',
           langButton: 'English'
         }
       };
@@ -1965,6 +2162,36 @@
           applyLanguage(currentLang);
         });
       }
+
+      let currentTab = 'index';
+      const setTab = (tab) => {
+        currentTab = tabPanels[tab] ? tab : 'index';
+        body.setAttribute('data-active-tab', currentTab);
+        tabButtons.forEach((btn) => {
+          const isCurrent = btn.getAttribute('data-tab-target') === currentTab;
+          btn.classList.toggle('is-active', isCurrent);
+          btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        });
+        Object.entries(tabPanels).forEach(([name, panel]) => {
+          if (!panel) {
+            return;
+          }
+          const isCurrent = name === currentTab;
+          panel.classList.toggle('is-active', isCurrent);
+          panel.setAttribute('aria-hidden', isCurrent ? 'false' : 'true');
+        });
+      };
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          setTab(btn.getAttribute('data-tab-target') || 'index');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (currentTab === 'index') {
+            updateProgress();
+            updateAnchorByViewport();
+          }
+        });
+      });
 
       const revealTargets = Array.from(document.querySelectorAll('.section, .feature-card, .site-card, .footer-note'));
       revealTargets.forEach(el => el.classList.add('reveal'));
@@ -2059,6 +2286,9 @@
       };
 
       const onScroll = () => {
+        if (currentTab !== 'index') {
+          return;
+        }
         applyParallax();
         updateProgress();
         updateAnchorByViewport();
@@ -2066,6 +2296,7 @@
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll);
+      setTab('index');
       applyParallax();
       updateProgress();
       updateAnchorByViewport();
