@@ -31,6 +31,7 @@ jobs:
           cp index.html out/index.html
           cp assets/landing-previews/*.png out/assets/landing-previews/
           cp assets/profile.jpg out/assets/profile.jpg
+          cp assets/github-projects.json out/assets/github-projects.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

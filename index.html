@@ -1516,6 +1516,37 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .auto-projects-status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .auto-projects-grid {
+      margin-top: 14px;
+    }
+
+    .site-thumb--auto {
+      background: linear-gradient(145deg, #101a2d, #22365d 56%, #2e4b7c);
+    }
+
+    .site-thumb--auto .thumb-top span {
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    .site-thumb--auto .thumb-title,
+    .site-thumb--auto .thumb-line,
+    .site-thumb--auto .thumb-micro {
+      color: #eef4ff;
+    }
+
+    .site-thumb--auto .thumb-line {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
     .site-card.pending {
       border-style: dashed;
       background: rgba(255, 255, 255, 0.56);
@@ -2101,6 +2132,9 @@
           </div>
         </article>
       </div>
+
+      <div id="autoProjectsStatus" class="auto-projects-status" data-i18n="autoProjectsLoading">Syncing latest GitHub projects...</div>
+      <div id="autoProjectsGrid" class="sites-grid auto-projects-grid" aria-live="polite"></div>
     </section>
 
     <section id="live-map" class="footer-note">
@@ -2230,6 +2264,8 @@
       const anchorLinks = Array.from(document.querySelectorAll('.story-timeline a[data-anchor]'));
       const heroSteps = Array.from(document.querySelectorAll('.hero-step'));
       const featureCards = Array.from(document.querySelectorAll('.feature-card'));
+      const autoProjectsGrid = document.getElementById('autoProjectsGrid');
+      const autoProjectsStatus = document.getElementById('autoProjectsStatus');
       const anchorTargets = anchorLinks
         .map(link => {
           const id = link.getAttribute('href')?.replace('#', '');
@@ -2260,6 +2296,11 @@
           featuredIntro: 'Three live products, three distinct product narratives. Each card is framed as goals, methods, and outcomes.',
           sitesTitle: 'All Sites',
           sitesIntro: 'Direct entry points to each published product. Jump to live pages without extra layers.',
+          autoProjectsLoading: 'Syncing latest GitHub projects...',
+          autoProjectsEmpty: 'No additional GitHub projects found yet.',
+          autoProjectsError: 'GitHub sync is temporarily unavailable. Please try again later.',
+          autoProjectTag: 'GitHub Sync',
+          autoProjectOpen: 'Open Project',
           sitePodcastSummary: 'A podcast experience designed to reduce noise and create clarity in an entropic world.',
           siteChargingSummary: 'A deep-dive benchmark on HVB vehicles and charging performance, from specs to decision-ready insights.',
           siteGamingSummary: 'A brain-message playground blending chess, sudoku, snake, and 2048 into one branded interaction layer.',
@@ -2323,6 +2364,11 @@
           featuredIntro: '三个线上产品，三条不同叙事线。每张卡片都按目标、方法、结果来组织。',
           sitesTitle: '全部站点',
           sitesIntro: '每个已发布网站的直达入口，无需额外跳转层级。',
+          autoProjectsLoading: '正在同步最新 GitHub 项目...',
+          autoProjectsEmpty: '暂未发现可新增的 GitHub 项目。',
+          autoProjectsError: 'GitHub 同步暂时不可用，请稍后再试。',
+          autoProjectTag: 'GitHub 同步',
+          autoProjectOpen: '打开项目',
           sitePodcastSummary: '一个播客站点，在信息熵增的世界里，用内容节奏和结构帮助用户做熵减。',
           siteChargingSummary: '聚焦 HVB 车型与充电性能的深度 benchmark，从参数到决策洞察一体化呈现。',
           siteGamingSummary: '一个融合 chess、sudoku、snake、2048 的脑力互动场，把品牌表达做成可玩体验。',
@@ -2370,6 +2416,87 @@
         }
       };
 
+      let autoProjects = [];
+
+      const escapeHtml = (value) => String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+      const renderAutoProjects = (lang) => {
+        if (!autoProjectsGrid || !autoProjectsStatus) {
+          return;
+        }
+
+        const dict = i18n[lang] || i18n.en;
+        if (!Array.isArray(autoProjects) || autoProjects.length === 0) {
+          autoProjectsGrid.innerHTML = '';
+          autoProjectsStatus.textContent = dict.autoProjectsEmpty;
+          autoProjectsStatus.style.display = '';
+          return;
+        }
+
+        autoProjectsStatus.style.display = 'none';
+        autoProjectsGrid.innerHTML = autoProjects.map((project) => {
+          const title = escapeHtml(project.name || 'Untitled Project');
+          const desc = escapeHtml(project.description || 'Public repository discovered from GitHub sync.');
+          const url = escapeHtml(project.url || project.repo_url || '#');
+          const language = escapeHtml(project.language || 'Project');
+          const category = escapeHtml(project.category || dict.autoProjectTag);
+          const targetLabel = project.url_type === 'homepage' ? 'Live' : 'Repo';
+
+          return `
+            <article class="site-card auto-generated reveal is-visible">
+              <div class="site-thumb site-thumb--auto">
+                <div class="thumb-top"><span></span><span></span><span></span></div>
+                <div class="thumb-body">
+                  <div class="thumb-title">${title}</div>
+                  <div class="thumb-micro"><span>${category}</span><span>${language}</span><span>${targetLabel}</span></div>
+                  <div class="thumb-line long"></div>
+                  <div class="thumb-line short"></div>
+                </div>
+              </div>
+              <div class="site-tags">
+                <span class="site-tag">${dict.autoProjectTag}</span>
+                <span class="site-tag">${language}</span>
+              </div>
+              <h3>${title}</h3>
+              <p>${desc}</p>
+              <div class="site-actions">
+                <a href="${url}" target="_blank" rel="noreferrer">${dict.autoProjectOpen}</a>
+              </div>
+            </article>
+          `;
+        }).join('');
+      };
+
+      const loadAutoProjects = async (lang) => {
+        if (!autoProjectsGrid || !autoProjectsStatus) {
+          return;
+        }
+
+        const dict = i18n[lang] || i18n.en;
+        autoProjectsStatus.style.display = '';
+        autoProjectsStatus.textContent = dict.autoProjectsLoading;
+
+        try {
+          const response = await fetch('assets/github-projects.json', { cache: 'no-store' });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const payload = await response.json();
+          autoProjects = Array.isArray(payload.projects) ? payload.projects : [];
+          renderAutoProjects(lang);
+        } catch (error) {
+          autoProjects = [];
+          autoProjectsGrid.innerHTML = '';
+          autoProjectsStatus.style.display = '';
+          autoProjectsStatus.textContent = dict.autoProjectsError;
+        }
+      };
+
       const applyLanguage = (lang) => {
         const dict = i18n[lang] || i18n.en;
         document.title = dict.pageTitle;
@@ -2384,10 +2511,15 @@
           langToggle.setAttribute('aria-label', lang === 'en' ? 'Switch to Chinese' : '切换到英文');
         }
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+        if (Array.isArray(autoProjects) && autoProjects.length > 0) {
+          renderAutoProjects(lang);
+        }
       };
 
       let currentLang = 'en';
       applyLanguage(currentLang);
+      loadAutoProjects(currentLang);
       if (langToggle) {
         langToggle.addEventListener('click', () => {
           currentLang = currentLang === 'en' ? 'zh' : 'en';
