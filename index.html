@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vikipedia Landing</title>
+  <title>Vikipedia: Let's roll.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -242,6 +242,25 @@
       font-size: 13px;
       font-weight: 700;
       transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .lang-toggle {
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .lang-toggle:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 111, 255, 0.35);
     }
 
     .hero {
@@ -1411,7 +1430,8 @@
     .dark-theme .top-links a:hover,
     .dark-theme .card-actions a:hover,
     .dark-theme .site-actions a:hover,
-    .dark-theme .story-timeline a.is-active {
+    .dark-theme .story-timeline a.is-active,
+    .dark-theme .lang-toggle {
       color: #f4f8ff !important;
       border-color: rgba(83, 162, 255, 0.55) !important;
       background: rgba(26, 43, 74, 0.94) !important;
@@ -1568,11 +1588,12 @@
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div class="brand-copy">
-          <strong>Vikipedia: Viki's Wikipedia</strong>
-          <span>A compact case-study hub for your live products.</span>
+          <strong data-i18n="brandTitle">Vikipedia: Let's roll.</strong>
+          <span data-i18n="brandSubtitle">A compact case-study hub for your live products.</span>
         </div>
       </div>
       <nav class="top-links" aria-label="快速入口">
+        <button id="langToggle" class="lang-toggle" type="button">中文</button>
         <a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer">Battery &amp; Charging</a>
         <a href="https://ttoriaa.github.io/gaming-vikipedia/" target="_blank" rel="noreferrer">///M Playground</a>
         <a href="https://ttoriaa.github.io/shimai-podcast-site/index.html?lang=zh#home" target="_blank" rel="noreferrer">Podcast</a>
@@ -1581,16 +1602,16 @@
 
     <section id="home" class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Portfolio of live pages</p>
-        <h1>Vikipedia: Viki's Wikipedia.</h1>
+        <p class="eyebrow" data-i18n="eyebrow">Portfolio of live pages</p>
+        <h1 data-i18n="heroTitle">Vikipedia: Let's roll.</h1>
         <div class="hero-story" aria-live="polite">
-          <p class="hero-step" data-step="home">这不是链接列表，而是一个作品集首页。</p>
-          <p class="hero-step" data-step="featured">///M Playground 负责品牌交互，Battery &amp; Charging 负责数据产品力。</p>
-          <p class="hero-step" data-step="sites">时髦小姨 Podcast 负责内容叙事力，三者共同形成完整 web narrative。</p>
+          <p class="hero-step" data-step="home" data-i18n="heroStepM">///M Playground: a brainy playground with chess, sudoku, snake, and 2048.</p>
+          <p class="hero-step" data-step="featured" data-i18n="heroStepPodcast">Shimai Podcast: a show built to create clarity in an entropic world.</p>
+          <p class="hero-step" data-step="sites" data-i18n="heroStepBattery">Battery &amp; Charging: a deep dive into HVB vehicles and charging performance.</p>
         </div>
         <div class="hero-actions">
-          <a class="cta" href="#featured">Open Featured Projects</a>
-          <a class="ghost" href="#sites">Browse All Pages</a>
+          <a class="cta" href="#featured" data-i18n="ctaFeatured">Open Featured Projects</a>
+          <a class="ghost" href="#sites" data-i18n="ctaAll">Browse All Pages</a>
         </div>
         <div class="hero-notes">
           <div class="hero-note">
@@ -1653,8 +1674,8 @@
     <section id="featured" class="section">
       <div class="section-head">
         <div>
-          <h2>Featured</h2>
-          <p>Three live products, three distinct product narratives. 每个项目卡都按 case-study 结构呈现: 目标、方法、体验输出。</p>
+          <h2 data-i18n="featuredTitle">Featured</h2>
+          <p data-i18n="featuredIntro">Three live products, three distinct product narratives. Each card is framed as goals, methods, and outcomes.</p>
         </div>
       </div>
       <div class="feature-grid">
@@ -1777,8 +1798,8 @@
     <section id="sites" class="section">
       <div class="section-head">
         <div>
-          <h2>All Sites</h2>
-          <p>Direct entry points to each published product. 快速进入真实站点，不经过额外目录层。</p>
+          <h2 data-i18n="sitesTitle">All Sites</h2>
+          <p data-i18n="sitesIntro">Direct entry points to each published product. Jump to live pages without extra layers.</p>
         </div>
       </div>
       <div class="sites-grid">
@@ -1800,7 +1821,7 @@
             <span class="site-tag">Podcast</span>
           </div>
           <h3>时髦小姨 Podcast</h3>
-          <p>Case summary: 以内容语气和收听路径为核心，优先建立节目氛围，再导向栏目。</p>
+          <p data-i18n="sitePodcastSummary">A podcast experience designed to reduce noise and create clarity in an entropic world.</p>
           <div class="site-actions">
             <a href="https://ttoriaa.github.io/shimai-podcast-site/index.html?lang=zh#home" target="_blank" rel="noreferrer">Open</a>
           </div>
@@ -1821,7 +1842,7 @@
             <span class="site-tag">Portal</span>
           </div>
           <h3>懂车帝 Battery &amp; Charging</h3>
-          <p>Case summary: 把参数信息转成可比较、可复盘、可汇报的 benchmark 资产。</p>
+          <p data-i18n="siteChargingSummary">A deep-dive benchmark on HVB vehicles and charging performance, from specs to decision-ready insights.</p>
           <div class="site-actions">
             <a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer">Open</a>
           </div>
@@ -1842,7 +1863,7 @@
             <span class="site-tag">Gaming</span>
           </div>
           <h3>///M Playground</h3>
-          <p>Case summary: 用可玩交互承载品牌表达，强化视觉记忆与停留时长。</p>
+          <p data-i18n="siteGamingSummary">A brain-message playground blending chess, sudoku, snake, and 2048 into one branded interaction layer.</p>
           <div class="site-actions">
             <a href="https://ttoriaa.github.io/gaming-vikipedia/" target="_blank" rel="noreferrer">Open</a>
           </div>
@@ -1851,13 +1872,14 @@
     </section>
 
     <section id="live-map" class="footer-note">
-      <strong>Current live map</strong>
-      <p>This landing page now behaves like a lightweight portfolio homepage: stable visual previews, concise case-study framing, and direct links to live production pages.</p>
+      <strong data-i18n="liveMapTitle">Current live map</strong>
+      <p data-i18n="liveMapDesc">This landing page now behaves like a lightweight portfolio homepage: stable visual previews, concise case-study framing, and direct links to live production pages.</p>
     </section>
   </div>
   <script>
     (() => {
       const progressBar = document.getElementById('scrollProgressBar');
+      const langToggle = document.getElementById('langToggle');
       const anchorLinks = Array.from(document.querySelectorAll('.story-timeline a[data-anchor]'));
       const heroSteps = Array.from(document.querySelectorAll('.hero-step'));
       const featureCards = Array.from(document.querySelectorAll('.feature-card'));
@@ -1871,6 +1893,78 @@
           return section ? { link, section } : null;
         })
         .filter(Boolean);
+
+      const i18n = {
+        en: {
+          pageTitle: "Vikipedia: Let's roll.",
+          brandTitle: "Vikipedia: Let's roll.",
+          brandSubtitle: 'A compact case-study hub for your live products.',
+          eyebrow: 'Portfolio of live pages',
+          heroTitle: "Vikipedia: Let's roll.",
+          heroStepM: '///M Playground: a brainy playground with chess, sudoku, snake, and 2048.',
+          heroStepPodcast: 'Shimai Podcast: a show built to create clarity in an entropic world.',
+          heroStepBattery: 'Battery & Charging: a deep dive into HVB vehicles and charging performance.',
+          ctaFeatured: 'Open Featured Projects',
+          ctaAll: 'Browse All Pages',
+          featuredTitle: 'Featured',
+          featuredIntro: 'Three live products, three distinct product narratives. Each card is framed as goals, methods, and outcomes.',
+          sitesTitle: 'All Sites',
+          sitesIntro: 'Direct entry points to each published product. Jump to live pages without extra layers.',
+          sitePodcastSummary: 'A podcast experience designed to reduce noise and create clarity in an entropic world.',
+          siteChargingSummary: 'A deep-dive benchmark on HVB vehicles and charging performance, from specs to decision-ready insights.',
+          siteGamingSummary: 'A brain-message playground blending chess, sudoku, snake, and 2048 into one branded interaction layer.',
+          liveMapTitle: 'Current live map',
+          liveMapDesc: 'This landing page now behaves like a lightweight portfolio homepage: stable visual previews, concise case-study framing, and direct links to live production pages.',
+          langButton: '中文'
+        },
+        zh: {
+          pageTitle: "Vikipedia: Let's roll.",
+          brandTitle: "Vikipedia: Let's roll.",
+          brandSubtitle: '一个紧凑的案例作品首页，连接你所有线上项目。',
+          eyebrow: '线上项目作品集入口',
+          heroTitle: "Vikipedia: Let's roll.",
+          heroStepM: '///M Playground：脑力游乐场，聚合 chess / sudoku / snake / 2048，轻快但有品牌张力。',
+          heroStepPodcast: '时髦小姨 Podcast：一个播客。在熵增世界里，做内容的熵减。',
+          heroStepBattery: 'Battery & Charging：深挖 HVB 车型与充电性能，用数据讲清差异与趋势。',
+          ctaFeatured: '查看精选项目',
+          ctaAll: '浏览全部站点',
+          featuredTitle: '精选项目',
+          featuredIntro: '三个线上产品，三条不同叙事线。每张卡片都按目标、方法、结果来组织。',
+          sitesTitle: '全部站点',
+          sitesIntro: '每个已发布网站的直达入口，无需额外跳转层级。',
+          sitePodcastSummary: '一个播客站点，在信息熵增的世界里，用内容节奏和结构帮助用户做熵减。',
+          siteChargingSummary: '聚焦 HVB 车型与充电性能的深度 benchmark，从参数到决策洞察一体化呈现。',
+          siteGamingSummary: '一个融合 chess、sudoku、snake、2048 的脑力互动场，把品牌表达做成可玩体验。',
+          liveMapTitle: '当前线上地图',
+          liveMapDesc: '这个 landing page 现在是轻量作品集首页：稳定预览、清晰案例框架、直达线上页面。',
+          langButton: 'English'
+        }
+      };
+
+      const applyLanguage = (lang) => {
+        const dict = i18n[lang] || i18n.en;
+        document.title = dict.pageTitle;
+        document.querySelectorAll('[data-i18n]').forEach((node) => {
+          const key = node.getAttribute('data-i18n');
+          if (key && dict[key]) {
+            node.textContent = dict[key];
+          }
+        });
+        if (langToggle) {
+          langToggle.textContent = dict.langButton;
+          langToggle.setAttribute('aria-label', lang === 'en' ? 'Switch to Chinese' : '切换到英文');
+        }
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      };
+
+      let currentLang = 'en';
+      applyLanguage(currentLang);
+      if (langToggle) {
+        langToggle.addEventListener('click', () => {
+          currentLang = currentLang === 'en' ? 'zh' : 'en';
+          applyLanguage(currentLang);
+        });
+      }
 
       const revealTargets = Array.from(document.querySelectorAll('.section, .feature-card, .site-card, .footer-note'));
       revealTargets.forEach(el => el.classList.add('reveal'));
