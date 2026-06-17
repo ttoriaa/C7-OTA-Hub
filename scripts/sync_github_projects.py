@@ -34,6 +34,10 @@ def normalize_homepage(value: str | None) -> str | None:
     return f"https://{value}"
 
 
+def has_any_homepage(repo: dict[str, Any]) -> bool:
+    return normalize_homepage(repo.get("homepage")) is not None
+
+
 def is_pages_homepage(url: str | None, username: str) -> bool:
     if not url:
         return False
@@ -46,6 +50,14 @@ def is_github_pages_project(repo: dict[str, Any], username: str) -> bool:
         return True
     homepage = normalize_homepage(repo.get("homepage"))
     return is_pages_homepage(homepage, username)
+
+
+def is_eligible_project(repo: dict[str, Any], username: str, include_homepage_any_domain: bool) -> bool:
+    if is_github_pages_project(repo, username):
+        return True
+    if include_homepage_any_domain and has_any_homepage(repo):
+        return True
+    return False
 
 
 def build_project(repo: dict[str, Any], username: str) -> dict[str, Any]:
@@ -97,7 +109,13 @@ def fetch_repositories(username: str, token: str | None) -> list[dict[str, Any]]
     return repos
 
 
-def sync(username: str, output_path: Path, limit: int, token: str | None) -> int:
+def sync(
+    username: str,
+    output_path: Path,
+    limit: int,
+    token: str | None,
+    include_homepage_any_domain: bool,
+) -> int:
     repos = fetch_repositories(username, token)
 
     filtered = [
@@ -107,7 +125,7 @@ def sync(username: str, output_path: Path, limit: int, token: str | None) -> int
         and not repo.get("private")
         and not repo.get("archived")
         and repo.get("name") != f"{username}.github.io"
-        and is_github_pages_project(repo, username)
+        and is_eligible_project(repo, username, include_homepage_any_domain)
     ]
 
     projects = [build_project(repo, username) for repo in filtered][:limit]
@@ -129,6 +147,14 @@ def main() -> int:
     parser.add_argument("--output", default="assets/github-projects.json")
     parser.add_argument("--limit", type=int, default=9)
     parser.add_argument("--token", default=os.getenv("GITHUB_TOKEN", ""))
+    parser.add_argument(
+        "--include-homepage-any-domain",
+        action="store_true",
+        help=(
+            "Also include repositories with any homepage URL, not only GitHub Pages. "
+            "By default, only GitHub Pages projects are included."
+        ),
+    )
     args = parser.parse_args()
 
     count = sync(
@@ -136,6 +162,7 @@ def main() -> int:
         output_path=Path(args.output),
         limit=max(1, args.limit),
         token=args.token or None,
+        include_homepage_any_domain=args.include_homepage_any_domain,
     )
     print(f"Synced {count} projects to {args.output}")
     return 0
