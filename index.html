@@ -473,7 +473,7 @@
     }
 
     .hero-copy {
-      padding: clamp(18px, 3.2vw, 30px);
+      padding: clamp(12px, 2vw, 18px);
       position: relative;
       overflow: hidden;
       animation: rise-in 0.8s ease both;
@@ -502,7 +502,7 @@
 
     .eyebrow {
       width: fit-content;
-      margin: 0 0 16px;
+      margin: 0 0 28px;
       padding: 8px 14px;
       border-radius: 999px;
       background: rgba(16, 24, 32, 0.05);
@@ -518,9 +518,13 @@
       z-index: 1;
       margin: 0;
       max-width: 18ch;
-      font-size: clamp(30px, 4.8vw, 54px);
+      font-size: clamp(36px, 5.6vw, 66px);
       line-height: 1;
       letter-spacing: -0.04em;
+    }
+
+    .hero-copy h1 .hero-title-line {
+      display: block;
     }
 
     .hero-copy p {
@@ -533,10 +537,24 @@
       line-height: 1.8;
     }
 
+    .hero-copy .eyebrow {
+      margin: 0 0 18px;
+    }
+
+    .hero-right-rail {
+      margin-top: 8px;
+      margin-left: auto;
+      width: min(56%, 620px);
+      display: grid;
+      gap: 56px;
+      justify-items: stretch;
+    }
+
     .hero-story {
       position: relative;
       z-index: 1;
-      margin-top: 14px;
+      margin-top: 0;
+      padding-left: 0;
       display: grid;
       gap: 6px;
     }
@@ -567,8 +585,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 14px;
-      width: 100%;
+      margin-top: 0;
+      width: auto;
       justify-content: flex-end;
     }
 
@@ -1802,6 +1820,11 @@
       .section-head h2 {
         letter-spacing: -0.05em;
       }
+
+      .hero-right-rail {
+        width: 100%;
+        margin-left: 0;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1861,15 +1884,20 @@
     <section id="home" class="hero">
       <div class="hero-copy">
         <p class="eyebrow" data-i18n="eyebrow">Portfolio of live pages</p>
-        <h1 data-i18n="heroTitle">Vikipedia: Let's roll.</h1>
-        <div class="hero-story" aria-live="polite">
-          <p class="hero-step" data-step="home" data-i18n="heroStepM">///M Playground: a brainy playground with chess, sudoku, snake, and 2048.</p>
-          <p class="hero-step" data-step="featured" data-i18n="heroStepPodcast">Shimai Podcast: a show built to create clarity in an entropic world.</p>
-          <p class="hero-step" data-step="sites" data-i18n="heroStepBattery">Battery &amp; Charging: a deep dive into HVB vehicles and charging performance.</p>
-        </div>
-        <div class="hero-actions">
-          <a class="cta" href="#featured" data-i18n="ctaFeatured">Open Featured Projects</a>
-          <a class="ghost" href="#sites" data-i18n="ctaAll">Browse All Pages</a>
+        <h1>
+          <span class="hero-title-line" data-i18n="heroTitleLine1">Vikipedia:</span>
+          <span class="hero-title-line" data-i18n="heroTitleLine2">Let's roll.</span>
+        </h1>
+        <div class="hero-right-rail">
+          <div class="hero-story" aria-live="polite">
+            <p class="hero-step" data-step="home" data-i18n="heroStepM">///M Playground: a brainy playground with chess, sudoku, snake, and 2048.</p>
+            <p class="hero-step" data-step="featured" data-i18n="heroStepPodcast">Shimai Podcast: a show built to create clarity in an entropic world.</p>
+            <p class="hero-step" data-step="sites" data-i18n="heroStepBattery">Battery &amp; Charging: a deep dive into HVB vehicles and charging performance.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="cta" href="#featured" data-i18n="ctaFeatured">Open Featured Projects</a>
+            <a class="ghost" href="#sites" data-i18n="ctaAll">Browse All Pages</a>
+          </div>
         </div>
       </div>
 
@@ -2221,7 +2249,8 @@
           tabIndex: 'Index',
           tabResume: 'Resume',
           eyebrow: 'Portfolio of live pages',
-          heroTitle: "Vikipedia: Let's roll.",
+          heroTitleLine1: 'Vikipedia:',
+          heroTitleLine2: "Let's roll.",
           heroStepM: '///M Playground: a brainy playground with chess, sudoku, snake, and 2048.',
           heroStepPodcast: 'Shimai Podcast: a show built to create clarity in an entropic world.',
           heroStepBattery: 'Battery & Charging: a deep dive into HVB vehicles and charging performance.',
@@ -2283,7 +2312,8 @@
           tabIndex: '首页',
           tabResume: '简历',
           eyebrow: '线上项目作品集入口',
-          heroTitle: "Vikipedia: Let's roll.",
+          heroTitleLine1: 'Vikipedia:',
+          heroTitleLine2: "Let's roll.",
           heroStepM: '///M Playground：脑力游乐场，聚合 chess / sudoku / snake / 2048，轻快但有品牌张力。',
           heroStepPodcast: '时髦小姨 Podcast：一个播客。在熵增世界里，做内容的熵减。',
           heroStepBattery: 'Battery & Charging：深挖 HVB 车型与充电性能，用数据讲清差异与趋势。',
