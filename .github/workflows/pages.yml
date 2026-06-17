@@ -30,6 +30,7 @@ jobs:
           mkdir -p out/assets/landing-previews
           cp index.html out/index.html
           cp assets/landing-previews/*.png out/assets/landing-previews/
+          cp assets/profile.jpg out/assets/profile.jpg
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
