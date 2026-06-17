@@ -24,8 +24,16 @@ jobs:
         env:
           GITHUB_SYNC_USERNAME: ttoriaa
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_SYNC_INCLUDE_HOMEPAGE_ANY_DOMAIN: ${{ vars.GITHUB_SYNC_INCLUDE_HOMEPAGE_ANY_DOMAIN }}
         run: |
-          python scripts/sync_github_projects.py --output assets/github-projects.json --limit 9
+          EXTRA_ARGS=""
+          INCLUDE_FLAG="${GITHUB_SYNC_INCLUDE_HOMEPAGE_ANY_DOMAIN:-false}"
+          INCLUDE_FLAG_LOWER=$(echo "$INCLUDE_FLAG" | tr '[:upper:]' '[:lower:]')
+          if [ "$INCLUDE_FLAG_LOWER" = "true" ] || [ "$INCLUDE_FLAG_LOWER" = "1" ] || [ "$INCLUDE_FLAG_LOWER" = "yes" ]; then
+            EXTRA_ARGS="--include-homepage-any-domain"
+          fi
+
+          python scripts/sync_github_projects.py --output assets/github-projects.json --limit 9 $EXTRA_ARGS
 
       - name: Commit changes
         run: |
