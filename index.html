@@ -456,7 +456,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+      grid-template-columns: 1fr;
       gap: 16px;
       margin-bottom: 18px;
     }
@@ -570,55 +570,6 @@
       margin-top: 14px;
       width: 100%;
       justify-content: flex-end;
-    }
-
-    .hero-side {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      background: var(--card);
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
-      padding: 16px;
-      display: grid;
-      gap: 12px;
-      align-content: start;
-    }
-
-    .hero-side h3 {
-      margin: 0;
-      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-side p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .hero-side-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .hero-side-chip {
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(16, 24, 32, 0.08);
-      background: rgba(255, 255, 255, 0.7);
-      font-size: 11px;
-      color: #5f7083;
-      line-height: 1.45;
-    }
-
-    .hero-side-chip strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--ink);
-      font-size: 12px;
     }
 
     .hero-notes {
@@ -1682,9 +1633,7 @@
 
     .dark-theme .top-tabs,
     .dark-theme .top-tab,
-    .dark-theme .resume-card,
-    .dark-theme .hero-side,
-    .dark-theme .hero-side-chip {
+    .dark-theme .resume-card {
       background: rgba(12, 18, 30, 0.78);
       border-color: rgba(163, 189, 255, 0.2);
       color: #dbe9ff;
@@ -1831,7 +1780,6 @@
       .stat-blocks,
       .hero-notes,
       .project-meta,
-      .hero-side-grid,
       .resume-intern-grid {
         grid-template-columns: 1fr;
       }
@@ -1925,28 +1873,6 @@
         </div>
       </div>
 
-      <aside class="hero-side">
-        <h3 data-i18n="heroSideTitle">Live Snapshot</h3>
-        <p data-i18n="heroSideDesc">Three product tracks with different strengths, now curated under one lightweight launch surface.</p>
-        <div class="hero-side-grid">
-          <div class="hero-side-chip">
-            <strong data-i18n="heroChip1Title">Interactive</strong>
-            <span data-i18n="heroChip1Text">///M Playground</span>
-          </div>
-          <div class="hero-side-chip">
-            <strong data-i18n="heroChip2Title">Data</strong>
-            <span data-i18n="heroChip2Text">Battery &amp; Charging</span>
-          </div>
-          <div class="hero-side-chip">
-            <strong data-i18n="heroChip3Title">Content</strong>
-            <span data-i18n="heroChip3Text">Shimai Podcast</span>
-          </div>
-          <div class="hero-side-chip">
-            <strong data-i18n="heroChip4Title">Format</strong>
-            <span data-i18n="heroChip4Text">Bilingual portfolio + resume</span>
-          </div>
-        </div>
-      </aside>
     </section>
 
     <section id="featured" class="section">
@@ -2299,16 +2225,6 @@
           heroStepM: '///M Playground: a brainy playground with chess, sudoku, snake, and 2048.',
           heroStepPodcast: 'Shimai Podcast: a show built to create clarity in an entropic world.',
           heroStepBattery: 'Battery & Charging: a deep dive into HVB vehicles and charging performance.',
-          heroSideTitle: 'Live Snapshot',
-          heroSideDesc: 'Three product tracks with different strengths, now curated under one lightweight launch surface.',
-          heroChip1Title: 'Interactive',
-          heroChip1Text: '///M Playground',
-          heroChip2Title: 'Data',
-          heroChip2Text: 'Battery and Charging',
-          heroChip3Title: 'Content',
-          heroChip3Text: 'Shimai Podcast',
-          heroChip4Title: 'Format',
-          heroChip4Text: 'Bilingual portfolio plus resume',
           ctaFeatured: 'Open Featured Projects',
           ctaAll: 'Browse All Pages',
           featuredTitle: 'Featured',
@@ -2371,16 +2287,6 @@
           heroStepM: '///M Playground：脑力游乐场，聚合 chess / sudoku / snake / 2048，轻快但有品牌张力。',
           heroStepPodcast: '时髦小姨 Podcast：一个播客。在熵增世界里，做内容的熵减。',
           heroStepBattery: 'Battery & Charging：深挖 HVB 车型与充电性能，用数据讲清差异与趋势。',
-          heroSideTitle: '线上速览',
-          heroSideDesc: '三个方向、三种产品能力，在同一入口中被快速组织与表达。',
-          heroChip1Title: '互动',
-          heroChip1Text: '///M Playground',
-          heroChip2Title: '数据',
-          heroChip2Text: 'Battery & Charging',
-          heroChip3Title: '内容',
-          heroChip3Text: '时髦小姨 Podcast',
-          heroChip4Title: '形态',
-          heroChip4Text: '中英双语作品集 + 简历',
           ctaFeatured: '查看精选项目',
           ctaAll: '浏览全部站点',
           featuredTitle: '精选项目',
