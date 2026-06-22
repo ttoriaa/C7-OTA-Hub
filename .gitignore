@@ -11,3 +11,6 @@ pd30/
 *.txt
 
 !assets/landing-previews/*.png
+!.vscode/
+.vscode/*
+!.vscode/tasks.json

@@ -1,7 +1,7 @@
 param(
     [string]$Date,
-    [switch]$Deploy,
-    [switch]$DispatchWorkflow
+    [string]$Deploy = 'false',
+    [string]$DispatchWorkflow = 'false'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -41,8 +41,28 @@ function Assert-PathExists {
     }
 }
 
+function Convert-ToBoolean {
+    param(
+        [string]$Value,
+        [string]$ParameterName
+    )
+
+    $raw = if ($null -eq $Value) { '' } else { $Value }
+    $normalized = $raw.Trim().ToLowerInvariant()
+    switch ($normalized) {
+        'true' { return $true }
+        'false' { return $false }
+        '1' { return $true }
+        '0' { return $false }
+        '' { return $false }
+        default { throw "Invalid boolean value for ${ParameterName}: ${Value}" }
+    }
+}
+
 $resolvedDate = if ($Date) { $Date } else { Get-LatestReportDate -RootPath $reportRoot }
 $dailyDir = Join-Path $reportRoot $resolvedDate
+$shouldDeploy = Convert-ToBoolean -Value $Deploy -ParameterName 'Deploy'
+$shouldDispatchWorkflow = Convert-ToBoolean -Value $DispatchWorkflow -ParameterName 'DispatchWorkflow'
 
 Assert-PathExists $dailyDir
 Assert-PathExists (Join-Path $dailyDir 'filtered.csv')
@@ -78,7 +98,7 @@ try {
 
     Write-Host 'Site files check: pass'
 
-    if ($Deploy) {
+    if ($shouldDeploy) {
         $siteTargets = @(
             'site/data.html',
             'site/dashboard.html',
@@ -101,7 +121,7 @@ try {
         Write-Host 'Deploy status: skipped'
     }
 
-    if ($DispatchWorkflow) {
+    if ($shouldDispatchWorkflow) {
         $gh = Get-Command gh -ErrorAction SilentlyContinue
         if (-not $gh) {
             throw 'gh CLI not found; cannot dispatch workflow automatically'

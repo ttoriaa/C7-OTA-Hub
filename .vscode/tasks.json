@@ -1,0 +1,122 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "dongchediSiteSyncDate",
+      "type": "promptString",
+      "description": "Dongchedi site sync date (YYYY-MM-DD, leave empty for latest)",
+      "default": ""
+    },
+    {
+      "id": "dongchediSiteSyncDeploy",
+      "type": "pickString",
+      "description": "Whether to commit and push site changes",
+      "options": [
+        "true",
+        "false"
+      ],
+      "default": "false"
+    },
+    {
+      "id": "dongchediSiteSyncDispatch",
+      "type": "pickString",
+      "description": "Whether to trigger the Dongchedi Pages workflow",
+      "options": [
+        "true",
+        "false"
+      ],
+      "default": "false"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "Dongchedi Daily Report: Dry Run",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": [
+        ".\\scripts\\run_dongchedi_daily.py",
+        "--no-backfill-missing",
+        "--dry-run"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dongchedi Daily Report: Confluence",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": [
+        ".\\scripts\\run_dongchedi_daily.py",
+        "--no-backfill-missing"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dongchedi Daily Report: Check Unresolved Prices",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": [
+        ".\\scripts\\check_unresolved_dongchedi_prices.py"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dongchedi Site Sync: Local",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\scripts\\sync_dongchedi_site_after_daily.ps1",
+        "-Deploy",
+        "false",
+        "-DispatchWorkflow",
+        "false"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dongchedi Site Sync: Deploy",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\scripts\\sync_dongchedi_site_after_daily.ps1",
+        "-Deploy",
+        "true",
+        "-DispatchWorkflow",
+        "false"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dongchedi Site Sync: Parameterized",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\scripts\\sync_dongchedi_site_after_daily.ps1",
+        "-Date",
+        "${input:dongchediSiteSyncDate}",
+        "-Deploy",
+        "${input:dongchediSiteSyncDeploy}",
+        "-DispatchWorkflow",
+        "${input:dongchediSiteSyncDispatch}"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}
