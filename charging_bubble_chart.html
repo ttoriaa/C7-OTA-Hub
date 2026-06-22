@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EV Charging Performance Bubble Chart</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    :root {
+      --bg-1: #f7efe5;
+      --bg-2: #e9f3ff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --card: rgba(255, 255, 255, 0.8);
+      --border: rgba(31, 41, 55, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at -10% -20%, #ffd9a8 0%, transparent 60%),
+        radial-gradient(900px 500px at 110% 0%, #b9dcff 0%, transparent 55%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 20px 24px 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: 0.2px;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    #chart {
+      width: 100%;
+      height: 700px;
+    }
+
+    .note {
+      border-top: 1px solid var(--border);
+      padding: 12px 24px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        padding: 16px 14px 4px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      #chart {
+        height: 560px;
+      }
+
+      .note {
+        padding: 10px 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>电动车 Charging 性能分布 Bubble 图</h1>
+      <p class="sub">
+        X 轴 = 快充时间(min，越左越快) | Y 轴 = CLTC 续航(km，越高越长) | 气泡大小 = 电池容量(kWh) | 颜色 = 高压平台。
+      </p>
+    </div>
+    <div id="chart"></div>
+    <div class="note">
+      数据来源：你前一轮给出的 5 个懂车帝参数页汇总。仅绘制“同时有快充时间、CLTC续航、电池容量”的车型。<br />
+      说明：图中不代表完整性能结论，仅用于分布观察；同平台下不同补能区间（如 10-70 vs 30-80）可比性有限。
+    </div>
+  </div>
+
+  <script>
+    const raw = [
+      { pageId: 10070, model: "腾势Z9GT EV 2024款 630 四驱Pro版", cltc: 630, fastChargeMin: 19, platformV: 800, batteryKwh: 100 },
+      { pageId: 10070, model: "腾势Z9GT EV 2024款 630 四驱Max版", cltc: 630, fastChargeMin: 19, platformV: 800, batteryKwh: 100 },
+      { pageId: 9324, model: "仰望U7 EV 2026款 五座豪华版", cltc: 1006, fastChargeMin: 24, platformV: null, batteryKwh: 135.5 },
+      { pageId: 9324, model: "仰望U7 EV 2026款 四座旗舰版", cltc: 1006, fastChargeMin: 24, platformV: null, batteryKwh: 135.5 },
+      { pageId: 9324, model: "仰望U7 EV 2026款 超级四电版", cltc: 860, fastChargeMin: 24, platformV: null, batteryKwh: 135.5 },
+      { pageId: 25920, model: "尚界Z7 2026款 Max", cltc: 732, fastChargeMin: 15, platformV: 800, batteryKwh: 81 },
+      { pageId: 25920, model: "尚界Z7 2026款 Max+", cltc: 905, fastChargeMin: 15, platformV: 800, batteryKwh: 100 },
+      { pageId: 25920, model: "尚界Z7 2026款 Ultra", cltc: 791, fastChargeMin: 15, platformV: 800, batteryKwh: 100 },
+      { pageId: 6187, model: "小米SU7 2026款 后驱标准版", cltc: 720, fastChargeMin: 20, platformV: 800, batteryKwh: 73 },
+      { pageId: 6187, model: "小米SU7 2026款 后驱Pro版", cltc: 902, fastChargeMin: 21, platformV: 800, batteryKwh: 96.3 },
+      { pageId: 6187, model: "小米SU7 2026款 四驱Max版", cltc: 835, fastChargeMin: 12, platformV: 800, batteryKwh: 101.7 }
+    ];
+
+    const groups = {
+      "800V": raw.filter(d => d.platformV === 800),
+      "平台未明确": raw.filter(d => !d.platformV)
+    };
+
+    const palette = {
+      "800V": "#0f766e",
+      "平台未明确": "#f59e0b"
+    };
+
+    const traces = Object.entries(groups).map(([name, items]) => ({
+      type: "scatter",
+      mode: "markers",
+      name,
+      x: items.map(d => d.fastChargeMin),
+      y: items.map(d => d.cltc),
+      text: items.map(d => d.model),
+      customdata: items.map(d => [d.pageId, d.batteryKwh]),
+      marker: {
+        size: items.map(d => Math.max(16, d.batteryKwh * 0.35)),
+        color: palette[name],
+        opacity: 0.72,
+        line: { width: 1.2, color: "rgba(31,41,55,0.45)" }
+      },
+      hovertemplate:
+        "<b>%{text}</b><br>页面ID: %{customdata[0]}" +
+        "<br>快充时间: %{x} min" +
+        "<br>CLTC续航: %{y} km" +
+        "<br>电池容量: %{customdata[1]} kWh" +
+        "<extra></extra>"
+    }));
+
+    const layout = {
+      margin: { l: 70, r: 30, t: 26, b: 66 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(255,255,255,0.55)",
+      xaxis: {
+        title: "快充时间 (分钟，越小越快)",
+        gridcolor: "rgba(31, 41, 55, 0.12)",
+        zeroline: false
+      },
+      yaxis: {
+        title: "CLTC 续航 (km)",
+        gridcolor: "rgba(31, 41, 55, 0.12)",
+        zeroline: false
+      },
+      legend: {
+        orientation: "h",
+        y: 1.1,
+        x: 0
+      },
+      font: {
+        family: "Segoe UI, PingFang SC, Microsoft YaHei, sans-serif",
+        color: "#1f2937"
+      }
+    };
+
+    const config = {
+      responsive: true,
+      displaylogo: false,
+      modeBarButtonsToRemove: ["lasso2d", "select2d"]
+    };
+
+    Plotly.newPlot("chart", traces, layout, config);
+  </script>
+</body>
+</html>

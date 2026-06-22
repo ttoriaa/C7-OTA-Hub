@@ -35,3 +35,47 @@
 输出目录:
 - `reports/dongchedi_daily/<date>/`
 - 典型产物: `filtered.csv`, `filtered.json`, `summary.md`, `confluence_section.html`
+
+### 2) dongchedi-site-sync-after-daily
+
+用途:
+- 在当日懂车帝数据与 Confluence 更新完成后，同步网站页面。
+- 一次更新 data.html、dashboard.html、insights.html 与最新可视化别名。
+
+技能文件:
+- [.github/skills/dongchedi-site-sync-after-daily/SKILL.md](.github/skills/dongchedi-site-sync-after-daily/SKILL.md)
+
+快速调用:
+- Slash: `/dongchedi-site-sync-after-daily date=2026-06-17`
+- 本地预览不发布: `/dongchedi-site-sync-after-daily date=2026-06-17 deploy=false`
+- 自然语言: `把今天懂车帝充电日报同步到网站，包括数据、可视化和趋势总结。`
+
+### 3) vikipedia-github-landing-sync
+
+用途:
+- 检测 `ttoriaa` 公开 GitHub 仓库里新增的可展示项目站点。
+- 定期更新 landing page `#sites` 区块依赖的 `assets/github-projects.json`。
+- 为 `ttoriaa/vikipedia` 提供可复用的脚本和 GitHub Actions 模板。
+
+技能文件:
+- [.github/skills/vikipedia-github-landing-sync/SKILL.md](.github/skills/vikipedia-github-landing-sync/SKILL.md)
+
+快速调用:
+- Slash: `/vikipedia-github-landing-sync username=ttoriaa limit=9 include_project_boards=true install_workflow=true`
+- 允许任意 homepage 域名: `/vikipedia-github-landing-sync username=ttoriaa include_homepage_any_domain=true`
+- 一并同步 GitHub Projects 看板: `/vikipedia-github-landing-sync username=ttoriaa include_project_boards=true`
+- 自然语言: `给 vikipedia landing page 加一个定时同步 GitHub 新项目的技能和 workflow。`
+
+关键参数:
+- `username=<github-user>`
+- `limit=<max-projects>`
+- `include_homepage_any_domain=true|false`
+- `include_project_boards=true|false`
+- `project_board_limit=<n>`
+- `install_workflow=true|false`
+- `auto_commit=true|false`
+- `auto_push=true|false`
+
+模板文件:
+- `.github/skills/vikipedia-github-landing-sync/templates/vikipedia/scripts/sync_github_projects.py`
+- `.github/skills/vikipedia-github-landing-sync/templates/vikipedia/.github/workflows/sync-github-projects.yml`
