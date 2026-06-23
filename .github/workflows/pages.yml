@@ -25,16 +25,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build skills catalog
+        run: |
+          python3 scripts/build_skills_catalog.py --repo ttoriaa/vikipedia --output assets/skills-catalog.json
+
       - name: Prepare site artifact
         run: |
           test -d site
+          test -d market_watch
           rm -rf out
           mkdir -p out/assets/landing-previews
           cp -R site/. out/
+          cp -R market_watch out/market_watch
           cp index.html out/index.html
           cp assets/landing-previews/*.png out/assets/landing-previews/
           cp assets/profile.jpg out/assets/profile.jpg
           cp assets/github-projects.json out/assets/github-projects.json
+          cp assets/skills-catalog.json out/assets/skills-catalog.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

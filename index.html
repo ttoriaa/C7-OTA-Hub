@@ -2322,7 +2322,6 @@
       const autoProjectsStatus = document.getElementById('autoProjectsStatus');
       const skillsGrid = document.getElementById('skillsGrid');
       const skillsStatus = document.getElementById('skillsStatus');
-      const skillsRepo = 'ttoriaa/vikipedia';
       let skillsCatalog = [];
       const anchorTargets = anchorLinks
         .map(link => {
@@ -2584,62 +2583,6 @@
         }).join('');
       };
 
-      const extractFirstParagraph = (markdown) => {
-        const lines = String(markdown || '').replace(/\r/g, '').split('\n');
-        let index = 0;
-
-        if (lines[0] && lines[0].trim() === '---') {
-          index = 1;
-          while (index < lines.length && lines[index].trim() !== '---') {
-            index += 1;
-          }
-          if (index < lines.length) {
-            index += 1;
-          }
-        }
-
-        const paragraph = [];
-        let inCodeFence = false;
-
-        for (; index < lines.length; index += 1) {
-          const raw = lines[index];
-          const line = raw.trim();
-
-          if (line.startsWith('```')) {
-            inCodeFence = !inCodeFence;
-            continue;
-          }
-
-          if (inCodeFence) {
-            continue;
-          }
-
-          if (!line) {
-            if (paragraph.length > 0) {
-              break;
-            }
-            continue;
-          }
-
-          if (/^#{1,6}\s/.test(line) || /^[-*+]\s/.test(line) || /^\d+\.\s/.test(line) || /^>\s?/.test(line) || /^\|/.test(line)) {
-            if (paragraph.length > 0) {
-              break;
-            }
-            continue;
-          }
-
-          paragraph.push(line);
-        }
-
-        return paragraph.join(' ').replace(/\s+/g, ' ').trim();
-      };
-
-      const toDisplayName = (slug) => slug
-        .split('-')
-        .filter(Boolean)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ');
-
       const loadSkillsCatalog = async (lang) => {
         if (!skillsStatus || !skillsGrid) {
           return;
@@ -2650,47 +2593,19 @@
         skillsStatus.textContent = dict.skillsLoading;
 
         try {
-          const listUrl = `https://api.github.com/repos/${skillsRepo}/contents/.github/skills`;
-          const listResp = await fetch(listUrl, {
-            headers: { Accept: 'application/vnd.github+json' },
-            cache: 'no-store'
-          });
-          if (!listResp.ok) {
-            throw new Error(`HTTP ${listResp.status}`);
+          const resp = await fetch('assets/skills-catalog.json', { cache: 'no-store' });
+          if (!resp.ok) {
+            throw new Error(`HTTP ${resp.status}`);
           }
 
-          const items = await listResp.json();
-          const skillDirs = Array.isArray(items)
-            ? items
-              .filter((item) => item && item.type === 'dir' && typeof item.name === 'string')
-              .sort((a, b) => a.name.localeCompare(b.name))
-            : [];
-
-          const skills = await Promise.all(skillDirs.map(async (item) => {
-            const slug = item.name;
-            const rawSkillUrl = `https://raw.githubusercontent.com/${skillsRepo}/main/.github/skills/${slug}/SKILL.md`;
-            let description = '';
-
-            try {
-              const mdResp = await fetch(rawSkillUrl, { cache: 'no-store' });
-              if (mdResp.ok) {
-                const markdown = await mdResp.text();
-                description = extractFirstParagraph(markdown);
-              }
-            } catch (error) {
-              description = '';
-            }
-
-            return {
-              slug,
-              name: toDisplayName(slug),
-              description,
-              path: `.github/skills/${slug}`,
-              url: `https://github.com/${skillsRepo}/tree/main/.github/skills/${slug}`
-            };
+          const payload = await resp.json();
+          const skills = Array.isArray(payload?.skills) ? payload.skills : [];
+          skillsCatalog = skills.map((skill) => ({
+            name: skill.title || skill.slug || 'Untitled Skill',
+            description: skill.description || '',
+            path: skill.path || '',
+            url: skill.url || '#'
           }));
-
-          skillsCatalog = skills;
           renderSkills(lang);
         } catch (error) {
           skillsCatalog = [];
