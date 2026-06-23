@@ -793,24 +793,42 @@
     }
 
     .impact-card {
-      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      padding: 18px 16px;
       border-radius: var(--radius-md);
-      border: 1px solid var(--line);
-      background: var(--card-strong);
-      box-shadow: 0 12px 26px rgba(16, 24, 32, 0.1);
+      border: 1px solid rgba(119, 146, 196, 0.42);
+      background: linear-gradient(145deg, rgba(11, 22, 40, 0.94), rgba(24, 44, 76, 0.9));
+      box-shadow: 0 14px 30px rgba(7, 14, 28, 0.28);
+    }
+
+    .impact-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12px;
+      right: 12px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(122, 91, 255, 0.2), rgba(124, 220, 255, 0.86), rgba(122, 91, 255, 0.2));
     }
 
     .impact-card strong {
       display: block;
       font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
-      font-size: 30px;
+      color: #f4f8ff;
+      font-size: clamp(31px, 3.5vw, 38px);
       line-height: 1;
       margin-bottom: 6px;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
     }
 
     .impact-card span {
-      color: var(--muted);
+      color: #c0d2ef;
       font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       line-height: 1.6;
       display: block;
     }
@@ -1792,7 +1810,6 @@
     .dark-theme .feature-card p,
     .dark-theme .site-card p,
     .dark-theme .skill-card .skill-path,
-    .dark-theme .impact-card span,
     .dark-theme .skills-count,
     .dark-theme .fixed-cta p,
     .dark-theme .meta-line,
@@ -1818,6 +1835,20 @@
       background: linear-gradient(135deg, #7a5bff, #9b6dff 64%, #c4a1ff) !important;
       color: #fff;
       border-color: transparent;
+    }
+
+    .dark-theme .impact-card {
+      border-color: rgba(151, 180, 232, 0.45) !important;
+      background: linear-gradient(145deg, rgba(10, 20, 40, 0.95), rgba(20, 40, 74, 0.92)) !important;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
+    }
+
+    .dark-theme .impact-card strong {
+      color: #f7faff !important;
+    }
+
+    .dark-theme .impact-card span {
+      color: #c7d8f4 !important;
     }
 
     .dark-theme .hero-step.is-active,
