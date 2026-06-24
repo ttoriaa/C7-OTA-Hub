@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-06-24T06:23:17.748925+00:00",
+  "source": "https://github.com/ttoriaa",
+  "projects": [
+    {
+      "name": "vikipedia",
+      "description": "",
+      "url": "https://ttoriaa.github.io/vikipedia/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/vikipedia",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-06-24T06:21:19Z"
+    },
+    {
+      "name": "shimai-podcast-site",
+      "description": "For podcast website.",
+      "url": "https://ttoriaa.github.io/shimai-podcast-site/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
+      "language": "JavaScript",
+      "category": "Project",
+      "pushed_at": "2026-06-24T05:35:44Z"
+    },
+    {
+      "name": "market-research",
+      "description": "",
+      "url": "https://ttoriaa.github.io/market-research/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/market-research",
+      "language": "Python",
+      "category": "Project",
+      "pushed_at": "2026-06-22T05:53:35Z"
+    },
+    {
+      "name": "automotive-benchmarking",
+      "description": "",
+      "url": "https://ttoriaa.github.io/automotive-benchmarking/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/automotive-benchmarking",
+      "language": "Python",
+      "category": "Project",
+      "pushed_at": "2026-06-17T09:11:11Z"
+    },
+    {
+      "name": "gaming-vikipedia",
+      "description": "",
+      "url": "https://ttoriaa.github.io/gaming-vikipedia/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/gaming-vikipedia",
+      "language": "JavaScript",
+      "category": "Project",
+      "pushed_at": "2026-06-16T08:35:25Z"
+    },
+    {
+      "name": "dongchedi-charging-dashboard",
+      "description": "",
+      "url": "https://ttoriaa.github.io/dongchedi-charging-dashboard/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/dongchedi-charging-dashboard",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-06-12T05:25:53Z"
+    }
+  ]
+}
