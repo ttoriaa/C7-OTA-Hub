@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-24T06:23:17.748925+00:00",
+  "generated_at": "2026-06-24T06:30:47.031928+00:00",
   "source": "https://github.com/ttoriaa",
   "projects": [
     {
@@ -11,7 +11,7 @@
       "repo_url": "https://github.com/ttoriaa/vikipedia",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-06-24T06:21:19Z"
+      "pushed_at": "2026-06-24T06:29:15Z"
     },
     {
       "name": "shimai-podcast-site",
@@ -23,6 +23,17 @@
       "language": "JavaScript",
       "category": "Project",
       "pushed_at": "2026-06-24T05:35:44Z"
+    },
+    {
+      "name": "resume-tailor",
+      "description": "",
+      "url": "https://github.com/ttoriaa/resume-tailor",
+      "url_type": "repo",
+      "target_label": "Repo",
+      "repo_url": "https://github.com/ttoriaa/resume-tailor",
+      "language": "Python",
+      "category": "Project",
+      "pushed_at": "2026-06-24T05:52:56Z"
     },
     {
       "name": "market-research",
@@ -67,6 +78,17 @@
       "language": "HTML",
       "category": "Project",
       "pushed_at": "2026-06-12T05:25:53Z"
+    },
+    {
+      "name": "ttoriaa",
+      "description": "Config files for my GitHub profile.",
+      "url": "https://github.com/ttoriaa",
+      "url_type": "homepage",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/ttoriaa",
+      "language": "",
+      "category": "Config",
+      "pushed_at": "2023-06-19T14:37:00Z"
     }
   ]
 }
