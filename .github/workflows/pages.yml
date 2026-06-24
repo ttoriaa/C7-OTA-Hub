@@ -51,6 +51,10 @@ jobs:
           if [ -f assets/skills-catalog.json ]; then
             cp assets/skills-catalog.json out/assets/skills-catalog.json
           fi
+          if [ -d assets/token ]; then
+            mkdir -p out/assets
+            cp -R assets/token out/assets/token
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
