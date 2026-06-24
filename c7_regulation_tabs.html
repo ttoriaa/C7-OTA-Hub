@@ -133,6 +133,11 @@
     .hit-nav-btn:hover:not(:disabled) { background: #eef6ff; border-color: #b9d2ef; }
     .hit-nav-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .hit-nav-count { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; border-radius: 999px; background: #eef5fd; border: 1px solid #d8e5f3; color: #0d4f8f; padding: 6px 10px; font-size: 11px; font-weight: 800; }
+    .hit-mini-nav { position: sticky; top: 49px; z-index: 4; display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px 12px; border-bottom: 1px solid #dfe8f1; background: linear-gradient(180deg, #fefefe, #f7fafc); }
+    .hit-mini-nav[hidden] { display: none; }
+    .hit-mini-chip { border: 1px solid #d2e0f2; background: #fff; color: #355272; border-radius: 999px; padding: 6px 10px; font-size: 11px; font-weight: 700; cursor: pointer; max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hit-mini-chip:hover { background: #eef6ff; border-color: #b9d2ef; }
+    .hit-mini-chip.is-active { background: linear-gradient(135deg, rgba(11,92,171,0.14), rgba(29,111,193,0.08)); border-color: #9fc0e4; color: #0a4f90; }
     @media (max-width: 800px) {
       .wrap { padding: 16px; }
       .header { padding: 18px 16px; border-radius: 18px; }
@@ -245,7 +250,7 @@
                   <button class="overview-card-action" data-target="testing" type="button" id="overviewCardActionTesting">Open section</button>
                 </article></div>
             </div>
-            <div class="chapter-pane" id="chapterPane"><div class="hit-nav" id="hitNav" hidden><span class="hit-nav-label" id="hitNavLabel">Clause matches</span><button class="hit-nav-btn" id="hitPrevBtn" type="button">Previous</button><span class="hit-nav-count" id="hitNavCount">0 / 0</span><button class="hit-nav-btn" id="hitNextBtn" type="button">Next</button></div><div class="chapter-content" id="chapterContent"></div></div>
+            <div class="chapter-pane" id="chapterPane"><div class="hit-nav" id="hitNav" hidden><span class="hit-nav-label" id="hitNavLabel">Clause matches</span><button class="hit-nav-btn" id="hitPrevBtn" type="button">Previous</button><span class="hit-nav-count" id="hitNavCount">0 / 0</span><button class="hit-nav-btn" id="hitNextBtn" type="button">Next</button></div><div class="hit-mini-nav" id="hitMiniNav" hidden></div><div class="chapter-content" id="chapterContent"></div></div>
           </div>
         </section>
       </div>
@@ -358,6 +363,7 @@
     const hitNavCount = document.getElementById('hitNavCount');
     const hitPrevBtn = document.getElementById('hitPrevBtn');
     const hitNextBtn = document.getElementById('hitNextBtn');
+    const hitMiniNav = document.getElementById('hitMiniNav');
 
     let currentLang = 'en';
     let currentTarget = 'overview';
@@ -483,9 +489,16 @@
       const total = highlightedMarks.length;
       const hasHits = total > 0;
       hitNav.hidden = !hasHits;
+      hitMiniNav.hidden = !hasHits;
       hitPrevBtn.disabled = !hasHits || total === 1;
       hitNextBtn.disabled = !hasHits || total === 1;
       hitNavCount.textContent = hasHits ? `${activeHitIndex + 1} / ${total}` : '0 / 0';
+      hitMiniNav.innerHTML = hasHits
+        ? highlightedMarks.map((mark, markIndex) => {
+            const label = `${String(markIndex + 1).padStart(2, '0')} · ${mark.textContent.trim()}`;
+            return `<button class="hit-mini-chip${markIndex === activeHitIndex ? ' is-active' : ''}" data-hit-index="${markIndex}" type="button" title="${label}">${label}</button>`;
+          }).join('')
+        : '';
     }
 
     function setActiveHit(index, options = {}) {
@@ -719,6 +732,12 @@
 
     hitNextBtn.addEventListener('click', () => {
       setActiveHit(activeHitIndex + 1);
+    });
+
+    hitMiniNav.addEventListener('click', (event) => {
+      const action = event.target.closest('[data-hit-index]');
+      if (!action) return;
+      setActiveHit(Number(action.dataset.hitIndex));
     });
 
     heroTargetLinks.forEach((item) => {

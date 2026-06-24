@@ -1,81 +1,41 @@
-# Vikipedia Agents
+# C7 OTA Hub
 
-精简导航，帮助团队快速发现并调用常用 Skill。
+面向法规评审与技术对齐的静态门户仓库，当前最小发布面包含：
 
-## Skills Quick Entry
+- `index.html`: 门户首页入口
+- `c7_regulation_tabs.html`: C7 OTA Regulation Hub 主页面
+- `.github/workflows/pages.yml`: GitHub Pages 发布流程
 
-### 1) dongchedi-charging-confluence-pipeline
+## Live Site
 
-用途:
-- 触发懂车帝 charging 数据日常流程。
-- 生成报告产物并更新 Confluence 页面。
+- Portal home: `https://ttoriaa.github.io/C7-OTA-Hub/`
+- Regulation hub: `https://ttoriaa.github.io/C7-OTA-Hub/c7_regulation_tabs.html`
 
-技能文件:
-- [.github/skills/dongchedi-charging-confluence-pipeline/SKILL.md](.github/skills/dongchedi-charging-confluence-pipeline/SKILL.md)
+## Scope
 
-快速调用:
-- Slash: `/dongchedi-charging-confluence-pipeline`
-- 指定日期 dry-run: `/dongchedi-charging-confluence-pipeline date=2026-06-17 publish=false`
-- 指定日期并发布: `/dongchedi-charging-confluence-pipeline date=2026-06-17 publish=true`
-- 自然语言: `帮我跑懂车帝 charging 日报并更新 Confluence，日期用今天。`
+- 统一展示 C7 OTA 法规五个模块
+- 支持中英切换、章节导航、条款筛选、章节内命中高亮
+- 适合做法规解读、评审演示、条款映射与门户化浏览
 
-关键参数:
-- `date=YYYY-MM-DD`
-- `publish=true|false` (default: `true`)
-- `refresh_source=true|false` (default: `false`)
-- `strict_refresh=true|false` (default: `false`)
-- `no_backfill=true|false` (default: `true`)
+## Local Preview
 
-前置要求 (publish=true):
-- `CONFLUENCE_BASE_URL`
-- `CONFLUENCE_EMAIL`
-- `CONFLUENCE_API_TOKEN`
-- `CONFLUENCE_DAILY_PARENT_PAGE_ID` or `CONFLUENCE_DAILY_PAGE_ID`
+直接打开 `index.html` 或 `c7_regulation_tabs.html` 即可预览。
 
-输出目录:
-- `reports/dongchedi_daily/<date>/`
-- 典型产物: `filtered.csv`, `filtered.json`, `summary.md`, `confluence_section.html`
+如果需要本地 HTTP 预览，可在仓库根目录执行：
 
-### 2) dongchedi-site-sync-after-daily
+```powershell
+python -m http.server 8000
+```
 
-用途:
-- 在当日懂车帝数据与 Confluence 更新完成后，同步网站页面。
-- 一次更新 data.html、dashboard.html、insights.html 与最新可视化别名。
+然后访问 `http://localhost:8000/`。
 
-技能文件:
-- [.github/skills/dongchedi-site-sync-after-daily/SKILL.md](.github/skills/dongchedi-site-sync-after-daily/SKILL.md)
+## Deployment
 
-快速调用:
-- Slash: `/dongchedi-site-sync-after-daily date=2026-06-17`
-- 本地预览不发布: `/dongchedi-site-sync-after-daily date=2026-06-17 deploy=false`
-- 自然语言: `把今天懂车帝充电日报同步到网站，包括数据、可视化和趋势总结。`
+推送到 `main` 后，GitHub Actions 会自动发布 GitHub Pages。
+当前 workflow 只打包最小静态产物：
 
-### 3) vikipedia-github-landing-sync
+- `index.html`
+- `c7_regulation_tabs.html`
+- `assets/`（如果存在）
 
-用途:
-- 检测 `ttoriaa` 公开 GitHub 仓库里新增的可展示项目站点。
-- 定期更新 landing page `#sites` 区块依赖的 `assets/github-projects.json`。
-- 为 `ttoriaa/vikipedia` 提供可复用的脚本和 GitHub Actions 模板。
-
-技能文件:
-- [.github/skills/vikipedia-github-landing-sync/SKILL.md](.github/skills/vikipedia-github-landing-sync/SKILL.md)
-
-快速调用:
-- Slash: `/vikipedia-github-landing-sync username=ttoriaa limit=9 include_project_boards=true install_workflow=true`
-- 允许任意 homepage 域名: `/vikipedia-github-landing-sync username=ttoriaa include_homepage_any_domain=true`
-- 一并同步 GitHub Projects 看板: `/vikipedia-github-landing-sync username=ttoriaa include_project_boards=true`
-- 自然语言: `给 vikipedia landing page 加一个定时同步 GitHub 新项目的技能和 workflow。`
-
-关键参数:
-- `username=<github-user>`
-- `limit=<max-projects>`
-- `include_homepage_any_domain=true|false`
-- `include_project_boards=true|false`
-- `project_board_limit=<n>`
-- `install_workflow=true|false`
-- `auto_commit=true|false`
-- `auto_push=true|false`
-
-模板文件:
-- `.github/skills/vikipedia-github-landing-sync/templates/vikipedia/scripts/sync_github_projects.py`
-- `.github/skills/vikipedia-github-landing-sync/templates/vikipedia/.github/workflows/sync-github-projects.yml`
+这样可以避免把当前仓库里无关的历史文件一起发布出去。

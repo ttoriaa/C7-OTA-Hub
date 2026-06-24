@@ -3,261 +3,333 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vikipedia: Let's roll.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <title>C7 OTA Hub</title>
   <style>
     :root {
-      --bg: #f6f3ec;
-      --ink: #101820;
-      --muted: #52606d;
-      --line: rgba(16, 24, 32, 0.12);
-      --card: rgba(255, 255, 255, 0.76);
-      --card-strong: rgba(255, 255, 255, 0.92);
-      --blue: #7c5cff;
-      --cyan: #b389ff;
-      --orange: #8b5cf6;
-      --sand: #d9c6ff;
-      --shadow: 0 18px 60px rgba(16, 24, 32, 0.12);
-      --radius-xl: 28px;
+      --bg: #f1efe8;
+      --ink: #18222d;
+      --muted: #5d6975;
+      --line: rgba(24, 34, 45, 0.14);
+      --card: rgba(255, 255, 255, 0.86);
+      --card-strong: rgba(255, 255, 255, 0.94);
+      --navy: #183b63;
+      --blue: #0b5cab;
+      --gold: #c28a2c;
+      --shadow: 0 18px 44px rgba(24, 34, 45, 0.1);
+      --radius-xl: 30px;
       --radius-lg: 22px;
-      --radius-md: 18px;
+      --radius-md: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       color: var(--ink);
-      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(139, 92, 246, 0.34), transparent 28%),
-        radial-gradient(circle at 88% 12%, rgba(139, 92, 246, 0.2), transparent 25%),
-        linear-gradient(135deg, #fff7ec 0%, #f4f5f8 45%, #edf8ff 100%);
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.82)),
+        repeating-linear-gradient(180deg, rgba(21, 57, 96, 0.03) 0, rgba(21, 57, 96, 0.03) 1px, transparent 1px, transparent 36px),
+        radial-gradient(circle at top left, rgba(11, 92, 171, 0.08), transparent 24%),
+        linear-gradient(180deg, #eef2f7 0%, var(--bg) 100%);
       min-height: 100vh;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(16, 24, 32, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 24, 32, 0.03) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: radial-gradient(circle at center, black 50%, transparent 92%);
-      pointer-events: none;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
     .shell {
-      width: min(1240px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 28px 0 64px;
-      position: relative;
-      z-index: 1;
+      padding: 26px 0 54px;
     }
 
-    .story-timeline {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 60;
-      display: grid;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 16px 38px rgba(16, 24, 32, 0.13);
-    }
-
-    .story-timeline::before {
-      content: "";
-      position: absolute;
-      left: 22px;
-      top: 16px;
-      bottom: 16px;
-      width: 2px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(15, 111, 255, 0.35), rgba(85, 214, 255, 0.25), rgba(139, 92, 246, 0.35));
-    }
-
-    .story-timeline a {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 34px;
-      padding: 6px 12px 6px 24px;
-      border-radius: 999px;
-      color: #60707d;
-      font-size: 12px;
-      font-weight: 700;
-      transition: color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .story-timeline a::before {
-      content: "";
-      position: absolute;
-      left: 8px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: 2px solid rgba(15, 111, 255, 0.36);
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(15, 111, 255, 0.06);
-      transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .story-timeline a.is-active {
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.9);
-      transform: translateX(-2px);
-    }
-
-    .story-timeline a.is-active::before {
-      transform: scale(1.15);
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow: 0 0 0 4px rgba(15, 111, 255, 0.14);
-    }
-
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: rgba(16, 24, 32, 0.08);
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .scroll-progress-bar {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--blue), var(--cyan), var(--orange));
-      box-shadow: 0 0 14px rgba(15, 111, 255, 0.45);
-      transition: width 0.12s linear;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 10px 24px rgba(16, 24, 32, 0.07);
-      margin-bottom: 20px;
-      animation: rise-in 0.7s ease both;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    .hero {
       position: relative;
       overflow: hidden;
+      border: 1px solid #cad8e6;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(244,248,252,0.98));
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 16px;
     }
 
-    .brand-mark::after {
-      content: "V";
+    .hero::before {
+      content: "";
       position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 7px;
+      background: linear-gradient(180deg, #224e7a, #0b5cab);
     }
 
-    .brand-copy {
-      min-width: 0;
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -70px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(11, 92, 171, 0.12), transparent 68%);
+      pointer-events: none;
     }
 
-    .brand-copy strong,
-    .hero-copy h1,
-    .section-head h2,
-    .feature-card h3,
-    .site-card h3 {
-      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5c7aa0;
     }
 
-    .brand-copy strong {
-      display: block;
-      font-size: 16px;
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 56px);
+      line-height: 1.06;
+      color: var(--navy);
       letter-spacing: 0.02em;
     }
 
-    .brand-copy span {
-      display: block;
+    .lead {
+      margin: 14px 0 0;
+      max-width: 760px;
       color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 15px;
+      line-height: 1.72;
     }
 
-    .top-links {
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #0a467f;
+      background: rgba(11, 92, 171, 0.06);
+      border: 1px solid rgba(11, 92, 171, 0.14);
+    }
+
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      justify-content: flex-end;
-      align-items: center;
+      margin-top: 18px;
     }
 
-    .top-tabs {
+    .btn {
       display: inline-flex;
-      gap: 8px;
-      padding: 4px;
-      border: 1px solid var(--line);
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #cfe0f4;
+      background: rgba(255,255,255,0.96);
+      color: #123b66;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(11, 92, 171, 0.08);
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
     }
 
-    .top-tab {
-      min-height: 34px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      background: transparent;
+    .btn:hover {
+      transform: translateY(-1px);
+      background: #f4f9ff;
+      border-color: #b7d0eb;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0b5cab, #1d6fc1);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0a539a, #185fa7);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid #cfdbe8;
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid #d6e0ea;
+      background: linear-gradient(180deg, #f8fbff, #eef3f9);
+      font-size: 12px;
+      color: #5c7aa0;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .panel-body {
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(252,253,255,0.98) 0%, rgba(247,249,252,0.98) 100%);
+    }
+
+    .panel-body h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: var(--navy);
+    }
+
+    .panel-body p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: 14px;
+    }
+
+    .list {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .list li {
+      border: 1px solid #d7e3f1;
+      border-radius: 14px;
+      background: var(--card-strong);
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(11,92,171,0.05);
+    }
+
+    .list strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #163a63;
+      font-size: 15px;
+    }
+
+    .notes {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1px dashed #d1deed;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.66;
+    }
+
+    .footer {
+      text-align: right;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+      padding: 4px 4px 0;
     }
 
-    .top-tab.is-active {
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">C7 OTA Regulation Portal</p>
+      <h1>C7 OTA Hub</h1>
+      <p class="lead">
+        一个面向法规评审、技术对齐与章节检索的轻量门户入口。当前站点聚焦 C7 OTA Regulation Hub，
+        提供五大章节统一浏览、条款筛选、章节内命中高亮与中英切换。
+      </p>
+      <div class="hero-meta">
+        <span class="chip">5 Modules</span>
+        <span class="chip">Bilingual</span>
+        <span class="chip">Clause Finder</span>
+        <span class="chip">Portal Review</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="c7_regulation_tabs.html">Open C7 Regulation Hub</a>
+        <a class="btn" href="README.md">Read Repository Notes</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head">What Is Published</div>
+        <div class="panel-body">
+          <h2>Minimal Public Surface</h2>
+          <p>这个仓库当前只需要承担一个法规门户的静态发布职责，不再保留原站点式的大型导航结构。</p>
+          <ul class="list">
+            <li>
+              <strong>Homepage</strong>
+              作为法规门户的公开入口页，明确站点范围与跳转关系。
+            </li>
+            <li>
+              <strong>C7 OTA Regulation Hub</strong>
+              作为主功能页承载章节导航、条款清单、章节高亮与章节内容浏览。
+            </li>
+            <li>
+              <strong>GitHub Pages Workflow</strong>
+              仅打包最小必需静态文件，避免把无关历史文件一并发布。
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">Portal Notes</div>
+        <div class="panel-body">
+          <h2>Recommended Use</h2>
+          <ul class="list">
+            <li>
+              <strong>Review</strong>
+              适合法规章节快速演示、条款口径同步与评审会导航。
+            </li>
+            <li>
+              <strong>Mapping</strong>
+              适合把条款号、技术实现点与后台/车端边界做门户化归档。
+            </li>
+            <li>
+              <strong>Next Expansion</strong>
+              后续可继续补法规锚点、条款目录树、章节内条款固定链接。
+            </li>
+          </ul>
+          <div class="notes">
+            如果后续你要把这个仓库再收窄成“只保留法规门户两页”，可以继续删除当前仓库里继承来的其他无关文件；
+            但就发布层面来说，现有 workflow 已经不会把它们带到 GitHub Pages 上。
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="footer">C7 OTA Hub | Minimal publish entry</div>
+  </main>
+</body>
+</html>
       color: var(--ink);
       border-color: rgba(15, 111, 255, 0.32);
       background: rgba(255, 255, 255, 0.9);
