@@ -2371,7 +2371,7 @@
           <h3>时髦小姨 Podcast</h3>
           <p data-i18n="sitePodcastSummary">A podcast experience designed to reduce noise and create clarity in an entropic world.</p>
           <div class="site-actions">
-            <a href="https://ttoriaa.github.io/shimai-podcast-site/index.html?lang=zh#home" target="_blank" rel="noreferrer">Open</a>
+            <a href="https://ttoriaa.github.io/shimai-podcast-site/index.html?lang=zh#home" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
 
@@ -2392,7 +2392,7 @@
           <h3>懂车帝 Battery &amp; Charging</h3>
           <p data-i18n="siteChargingSummary">A deep-dive benchmark on HVB vehicles and charging performance, from specs to decision-ready insights.</p>
           <div class="site-actions">
-            <a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer">Open</a>
+            <a href="https://ttoriaa.github.io/automotive-benchmarking" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
 
@@ -2414,7 +2414,7 @@
           <h3>Market Watch</h3>
           <p>Track semiconductor, AI compute, energy, and gold with multi-source updates, alerts, and digest summaries.</p>
           <div class="site-actions">
-            <a href="https://ttoriaa.github.io/vikipedia/market_watch/" target="_blank" rel="noreferrer">Open</a>
+            <a href="https://ttoriaa.github.io/vikipedia/market_watch/" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
 
@@ -2436,7 +2436,7 @@
           <h3>GitHub Copilot Quickstart Guide</h3>
           <p>一页快速说明 GitHub Copilot 是什么、我们为什么要搭、怎么搭，以及它已经能支撑的典型 use cases。</p>
           <div class="site-actions">
-            <a href="copilot_quickstart_guide.html" target="_blank" rel="noreferrer">Open</a>
+            <a href="copilot_quickstart_guide.html" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
 
@@ -2458,7 +2458,7 @@
           <h3>Token</h3>
           <p data-i18n="siteTokenSummary">Your personal knowledge base surface with latest snapshots, decision logs, and report evidence.</p>
           <div class="site-actions">
-            <a href="reports/knowledge_base/index.html" target="_blank" rel="noreferrer">Open</a>
+            <a href="assets/token/index.html" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
 
@@ -2479,7 +2479,7 @@
           <h3>///M Playground</h3>
           <p data-i18n="siteGamingSummary">A brain-message playground blending chess, sudoku, snake, and 2048 into one branded interaction layer.</p>
           <div class="site-actions">
-            <a href="https://ttoriaa.github.io/gaming-vikipedia/" target="_blank" rel="noreferrer">Open</a>
+            <a href="https://ttoriaa.github.io/gaming-vikipedia/" target="_blank" rel="noreferrer" data-i18n="siteOpen">Open</a>
           </div>
         </article>
       </div>
@@ -2634,8 +2634,8 @@
           </div>
         </div>
         <div class="token-actions">
-          <a id="tokenOpenSiteLink" class="resume-btn" href="reports/knowledge_base/index.html" target="_blank" rel="noopener noreferrer" data-i18n="tokenOpenSite">Open Token Site</a>
-          <a class="resume-btn" href="reports/knowledge_base/latest.md" target="_blank" rel="noopener noreferrer" data-i18n="tokenOpenLatest">Open latest.md</a>
+          <a id="tokenOpenSiteLink" class="resume-btn" href="assets/token/index.html" target="_blank" rel="noopener noreferrer" data-i18n="tokenOpenSite">Open Token Site</a>
+          <a class="resume-btn" href="assets/token/latest.md" target="_blank" rel="noopener noreferrer" data-i18n="tokenOpenLatest">Open latest.md</a>
         </div>
         <div id="tokenSummaryStatus" class="auto-projects-status" data-i18n="tokenSummaryLoading">Loading auto summary...</div>
         <article id="tokenSummaryCard" class="resume-card token-summary-card" style="display:none;">
@@ -2643,7 +2643,7 @@
           <div id="tokenSummaryContent"></div>
         </article>
         <div class="token-frame">
-          <iframe id="tokenKnowledgeFrame" src="reports/knowledge_base/index.html" title="Token Knowledge Base" loading="lazy"></iframe>
+          <iframe id="tokenKnowledgeFrame" src="assets/token/index.html" title="Token Knowledge Base" loading="lazy"></iframe>
         </div>
       </section>
     </main>
@@ -2698,6 +2698,7 @@
           tabResume: 'Resume',
           tabSkills: 'Skills',
           tabToken: 'Token',
+          siteOpen: 'Open',
           eyebrow: 'Portfolio of live pages',
           heroTitleLine1: 'Vikipedia:',
           heroTitleLine2: "Let's roll.",
@@ -2803,10 +2804,11 @@
           pageTitle: "Vikipedia: Let's roll.",
           brandTitle: "Vikipedia: Let's roll.",
           brandSubtitle: '一个紧凑的案例作品首页，连接你所有线上项目。',
-          tabIndex: 'Home',
+          tabIndex: '首页',
           tabResume: '简历',
-          tabSkills: 'Skills',
+          tabSkills: '技能',
           tabToken: 'Token',
+          siteOpen: '打开',
           eyebrow: '线上项目作品集入口',
           heroTitleLine1: 'Vikipedia:',
           heroTitleLine2: "Let's roll.",
@@ -2878,7 +2880,7 @@
           resumeSkill2: '从数据到洞察的可视化与仪表盘体验设计',
           resumeSkill3: 'HTML / CSS / JavaScript 快速原型构建',
           resumeSkill4: '中英双语沟通与内容交付',
-          skillsTitle: 'Skills 能力库',
+          skillsTitle: '技能库',
           skillsIntro: '这里集中展示仓库中已训练的 skills。每张卡片都可直接跳转到对应 skill 目录。',
           skillsLoading: '正在从仓库加载 skills...',
           skillsEmpty: '在 .github/skills 下暂未发现 skill 目录。',
@@ -2893,8 +2895,8 @@
           skillsStatusStable: '稳定',
           skillsStatusExperimental: '实验中',
           skillsCountLabel: '{{count}} 个 skill',
-          skillsTag: 'Skill',
-          skillsOpen: '打开 Skill',
+          skillsTag: '技能',
+          skillsOpen: '打开技能',
           tokenTitle: 'Token',
           tokenIntro: '直接查看你的个人知识库网页，包含技能快照、项目证据与决策日志。',
           tokenOpenSite: '打开 Token 页面',
@@ -3046,7 +3048,7 @@
         tokenSummaryStatus.textContent = dict.tokenSummaryLoading;
 
         try {
-          const response = await fetch('reports/knowledge_base/latest.json', { cache: 'no-store' });
+          const response = await fetch('assets/token/latest.json', { cache: 'no-store' });
           if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
           }
@@ -3065,8 +3067,8 @@
 
       const syncTokenKnowledgeLanguage = (lang) => {
         const target = lang === 'zh'
-          ? 'reports/knowledge_base/index.zh.html'
-          : 'reports/knowledge_base/index.html';
+          ? 'assets/token/index.zh.html'
+          : 'assets/token/index.html';
         if (tokenKnowledgeFrame && tokenKnowledgeFrame.getAttribute('src') !== target) {
           tokenKnowledgeFrame.setAttribute('src', target);
         }

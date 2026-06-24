@@ -649,6 +649,8 @@ def main() -> None:
     latest_html_zh_path = repo_root / "reports" / "knowledge_base" / "latest.zh.html"
     dated_html_path = out_dir / "personal_kb.html"
     dated_html_zh_path = out_dir / "personal_kb.zh.html"
+    token_assets_dir = repo_root / "assets" / "token"
+    token_assets_dir.mkdir(parents=True, exist_ok=True)
 
     json_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     latest_json_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -661,12 +663,21 @@ def main() -> None:
     latest_html_path.write_text(html_text, encoding="utf-8")
     latest_html_zh_path.write_text(html_text_zh, encoding="utf-8")
 
+    # Mirror Token artifacts to a tracked directory so GitHub Pages can serve them.
+    (token_assets_dir / "index.html").write_text(html_text, encoding="utf-8")
+    (token_assets_dir / "index.zh.html").write_text(html_text_zh, encoding="utf-8")
+    (token_assets_dir / "latest.html").write_text(html_text, encoding="utf-8")
+    (token_assets_dir / "latest.zh.html").write_text(html_text_zh, encoding="utf-8")
+    (token_assets_dir / "latest.md").write_text(markdown, encoding="utf-8")
+    (token_assets_dir / "latest.json").write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
     print(f"Knowledge base written: {md_path}")
     print(f"JSON snapshot written: {json_path}")
     print(f"Latest JSON snapshot written: {latest_json_path}")
     print(f"Latest snapshot written: {latest_path}")
     print(f"Knowledge base site written: {site_index_path}")
     print(f"Knowledge base site (zh) written: {site_index_zh_path}")
+    print(f"Token assets written: {token_assets_dir}")
 
 
 if __name__ == "__main__":
