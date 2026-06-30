@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T07:09:06.223866+00:00",
+  "generated_at": "2026-06-30T06:34:59.793468+00:00",
   "source": "https://github.com/ttoriaa",
   "projects": [
     {
@@ -11,7 +11,29 @@
       "repo_url": "https://github.com/ttoriaa/vikipedia",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-06-29T07:06:26Z"
+      "pushed_at": "2026-06-30T06:34:00Z"
+    },
+    {
+      "name": "shimai-podcast-site",
+      "description": "For podcast website.",
+      "url": "https://ttoriaa.github.io/shimai-podcast-site/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
+      "language": "JavaScript",
+      "category": "Project",
+      "pushed_at": "2026-06-30T04:44:21Z"
+    },
+    {
+      "name": "C7-OTA-Hub",
+      "description": "",
+      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-06-29T07:09:07Z"
     },
     {
       "name": "automotive-benchmarking",
@@ -23,28 +45,6 @@
       "language": "Python",
       "category": "Project",
       "pushed_at": "2026-06-29T05:19:10Z"
-    },
-    {
-      "name": "shimai-podcast-site",
-      "description": "For podcast website.",
-      "url": "https://ttoriaa.github.io/shimai-podcast-site/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
-      "language": "JavaScript",
-      "category": "Project",
-      "pushed_at": "2026-06-28T20:11:52Z"
-    },
-    {
-      "name": "C7-OTA-Hub",
-      "description": "",
-      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
-      "language": "HTML",
-      "category": "Project",
-      "pushed_at": "2026-06-28T06:38:32Z"
     },
     {
       "name": "market-research",
