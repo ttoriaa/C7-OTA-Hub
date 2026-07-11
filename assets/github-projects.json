@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T06:16:08.737378+00:00",
+  "generated_at": "2026-07-11T05:23:24.799740+00:00",
   "source": "https://github.com/ttoriaa",
   "projects": [
     {
@@ -11,18 +11,7 @@
       "repo_url": "https://github.com/ttoriaa/vikipedia",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-07-10T06:16:06Z"
-    },
-    {
-      "name": "shimai-podcast-site",
-      "description": "For podcast website.",
-      "url": "https://ttoriaa.github.io/shimai-podcast-site/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
-      "language": "JavaScript",
-      "category": "Project",
-      "pushed_at": "2026-07-10T04:32:43Z"
+      "pushed_at": "2026-07-11T05:23:11Z"
     },
     {
       "name": "VikipediAi",
@@ -33,18 +22,18 @@
       "repo_url": "https://github.com/ttoriaa/VikipediAi",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-07-10T04:29:48Z"
+      "pushed_at": "2026-07-11T03:48:49Z"
     },
     {
-      "name": "C7-OTA-Hub",
-      "description": "",
-      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
+      "name": "shimai-podcast-site",
+      "description": "For podcast website.",
+      "url": "https://ttoriaa.github.io/shimai-podcast-site/",
       "url_type": "pages",
       "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
-      "language": "HTML",
+      "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
+      "language": "JavaScript",
       "category": "Project",
-      "pushed_at": "2026-07-09T06:16:38Z"
+      "pushed_at": "2026-07-10T21:59:51Z"
     },
     {
       "name": "automotive-benchmarking",
@@ -55,7 +44,18 @@
       "repo_url": "https://github.com/ttoriaa/automotive-benchmarking",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-07-09T03:11:27Z"
+      "pushed_at": "2026-07-10T14:57:23Z"
+    },
+    {
+      "name": "C7-OTA-Hub",
+      "description": "",
+      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-07-10T06:16:09Z"
     },
     {
       "name": "product-manager",
