@@ -14,7 +14,11 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
-from refresh_dongchedi_source import refresh_source_csv
+try:
+    from refresh_dongchedi_source import refresh_source_csv
+except ModuleNotFoundError:
+    # Support module import style: import scripts.run_dongchedi_daily
+    from scripts.refresh_dongchedi_source import refresh_source_csv
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT_ROOT = ROOT / "reports" / "dongchedi_daily"
@@ -44,6 +48,23 @@ OUTPUT_COLUMNS = [
 ]
 
 KEY_FIELDS_FOR_MISSING = ["高压快充平台", "充电时间", "充电电量", "电池容量(kWh)", "电芯品牌", "电池类型"]
+
+BOOTSTRAP_SOURCE_COLUMNS = [
+    "车系ID",
+    "车型",
+    "动力形式",
+    "纯电续航里程(km)工信部",
+    "纯电续航里程(km)CLTC",
+    "高压快充平台",
+    "充电时间",
+    "充电电量",
+    "快充电量(%)",
+    "电池类型",
+    "电芯品牌",
+    "电池容量(kWh)",
+    "电池能量密度(Wh/kg)",
+    "电动机",
+]
 
 
 def _clean(value: Any) -> str:
@@ -168,6 +189,40 @@ def _load_csv_rows(path: Path) -> list[dict[str, str]]:
         return [dict((k, _clean(v)) for k, v in row.items()) for row in csv.DictReader(f)]
 
 
+def _bootstrap_source_from_filtered() -> Path | None:
+    filtered = ROOT / "dongchedi_filtered_configs.csv"
+    if not filtered.exists():
+        return None
+
+    rows = _load_csv_rows(filtered)
+    if not rows:
+        return None
+
+    bootstrap = ROOT / "dongchedi_full_configs_bootstrap.csv"
+    if bootstrap.exists():
+        existing = _load_csv_rows(bootstrap)
+        if existing:
+            return bootstrap
+
+    with bootstrap.open("w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=BOOTSTRAP_SOURCE_COLUMNS)
+        writer.writeheader()
+        for r in rows:
+            out = {k: "未明确显示" for k in BOOTSTRAP_SOURCE_COLUMNS}
+            out["车系ID"] = _clean(r.get("车系ID"))
+            out["车型"] = _clean(r.get("车型"))
+            out["动力形式"] = _clean(r.get("动力形式")) or "未明确显示"
+            for k in BOOTSTRAP_SOURCE_COLUMNS:
+                if k in ("车系ID", "车型", "动力形式"):
+                    continue
+                v = _clean(r.get(k))
+                if v:
+                    out[k] = v
+            writer.writerow(out)
+
+    return bootstrap
+
+
 def _find_latest_source(source_override: str | None) -> Path:
     if source_override:
         p = Path(source_override)
@@ -179,6 +234,9 @@ def _find_latest_source(source_override: str | None) -> Path:
 
     candidates = sorted(glob.glob(str(ROOT / "dongchedi_full_configs_*.csv")))
     if not candidates:
+        bootstrap = _bootstrap_source_from_filtered()
+        if bootstrap:
+            return bootstrap
         raise FileNotFoundError("No source CSV found. Expected dongchedi_full_configs_YYYY-MM-DD.csv in workspace root.")
     return Path(candidates[-1])
 
