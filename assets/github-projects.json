@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T05:10:57.732178+00:00",
+  "generated_at": "2026-07-16T05:21:31.560311+00:00",
   "source": "https://github.com/ttoriaa",
   "projects": [
     {
@@ -11,18 +11,7 @@
       "repo_url": "https://github.com/ttoriaa/vikipedia",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-07-15T05:10:52Z"
-    },
-    {
-      "name": "VikipediAi",
-      "description": "",
-      "url": "https://ttoriaa.github.io/VikipediAi/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/VikipediAi",
-      "language": "HTML",
-      "category": "Project",
-      "pushed_at": "2026-07-15T03:41:53Z"
+      "pushed_at": "2026-07-16T04:36:20Z"
     },
     {
       "name": "shimai-podcast-site",
@@ -33,7 +22,29 @@
       "repo_url": "https://github.com/ttoriaa/shimai-podcast-site",
       "language": "JavaScript",
       "category": "Project",
-      "pushed_at": "2026-07-15T02:12:15Z"
+      "pushed_at": "2026-07-16T04:07:10Z"
+    },
+    {
+      "name": "VikipediAi",
+      "description": "",
+      "url": "https://ttoriaa.github.io/VikipediAi/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/VikipediAi",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-07-16T03:44:45Z"
+    },
+    {
+      "name": "interview-depot",
+      "description": "",
+      "url": "https://ttoriaa.github.io/interview-depot/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/interview-depot",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-07-16T02:33:47Z"
     },
     {
       "name": "automotive-benchmarking",
@@ -44,7 +55,18 @@
       "repo_url": "https://github.com/ttoriaa/automotive-benchmarking",
       "language": "HTML",
       "category": "Project",
-      "pushed_at": "2026-07-15T01:42:23Z"
+      "pushed_at": "2026-07-16T02:33:29Z"
+    },
+    {
+      "name": "C7-OTA-Hub",
+      "description": "",
+      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
+      "url_type": "pages",
+      "target_label": "Live",
+      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
+      "language": "HTML",
+      "category": "Project",
+      "pushed_at": "2026-07-15T05:10:58Z"
     },
     {
       "name": "market-research",
@@ -56,28 +78,6 @@
       "language": "Python",
       "category": "Project",
       "pushed_at": "2026-07-14T06:14:37Z"
-    },
-    {
-      "name": "C7-OTA-Hub",
-      "description": "",
-      "url": "https://ttoriaa.github.io/C7-OTA-Hub/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/C7-OTA-Hub",
-      "language": "HTML",
-      "category": "Project",
-      "pushed_at": "2026-07-14T06:13:36Z"
-    },
-    {
-      "name": "interview-depot",
-      "description": "",
-      "url": "https://ttoriaa.github.io/interview-depot/",
-      "url_type": "pages",
-      "target_label": "Live",
-      "repo_url": "https://github.com/ttoriaa/interview-depot",
-      "language": "HTML",
-      "category": "Project",
-      "pushed_at": "2026-07-13T05:41:33Z"
     },
     {
       "name": "product-manager",
